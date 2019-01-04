@@ -1,6 +1,5 @@
 COST_TYPE = {
-    FIXED: 0,
-    EXP: 1
+    FIXED: 0
 };
 
 TECH_TYPE = {
@@ -27,7 +26,7 @@ RESOURCE = {
 	Oil: 'oil',
 	Metal: 'metal',
 	Gem: 'gem',
-	Carbon: 'carbon',
+	Charcoal: 'charcoal',
 	Wood: 'wood',
 	Silicon: 'silicon',
 	Lunarite: 'lunarite',
@@ -54,8 +53,8 @@ Game.constants = (function(){
     instance.rank = ["Space Noob", "Space Explorer", "Solar Traveler", "Spaceship Pilot", "Dyson Sphere Technician", "Wonder Builder", "Overlord Associate", "Antimatter Tester", "Rocket Engineer", "Interstellar Space Farer", "Fleet Commander", "Faction Diplomat", "Console Cheater", "Save File Editor", "Source Code Hacker", "The Prestiged"]
     instance.achievementMax = 1000;
     instance.achievementIconsPerRow = 4;
-    instance.achievementResourceBrackets = [50, 50000, 50000000, 50000000000, 50000000000000];
-    instance.achievementProducerBrackets = [5, 25, 75, 150, 250];
+    instance.achievementResourceBrackets = [50, 5000, 500000, 50000000, 5000000000];
+    instance.achievementProducerBrackets = [10, 50, 100, 500, 1000];
     instance.achievementBracketColors = ["#9d9d9d", "#1eff00", "#0070dd", "#a335ee", "#ff8000"];
 
     instance.achievementCategoryResources = "Resources";
@@ -67,7 +66,8 @@ Game.constants = (function(){
 
     instance.maxTier = 6;
 
-    instance.enableMachineTab = true;
+    instance.enableStorageNotifications = false;
+    instance.enableMachineTab = false;
 
     return instance;
 }());

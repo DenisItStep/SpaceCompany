@@ -11,292 +11,94 @@ Game.settings = (function(){
         dataVersion: 1,
         entries: {
             formatter: 'shortName',
-            fps: 10,
             boldEnabled: false,
             sidebarCompressed: false,
             notificationsEnabled: true,
             saveNotifsEnabled: true,
             gainButtonsHidden: false,
             redDestroyButtons: false,
+            hideCompleted: false,
             theme: 'base',
             autoSaveInterval: 30 * 1000
         },
+        reapplyTheme: true
     };
-
-    // After a setting is changed, call: refreshElements() to force a all updateable elements to update.
-
-    instance.getMask = function() {};
-
-    ///////////////////////////////////////////////////
-    //              FORMATTING FUNCTIONS             //
-    // The UI will warn if it encounters an action   //
-    // which isn't defined.                          //
-    ///////////////////////////////////////////////////
-    /**
-     * Formats a value according to the action/key provided.
-     * @param   {String} action  Internal descriptor of the formatting case
-     * @param   {Object} object  The parent object of the method requesting formatting
-     * @return  {String}         Returns the formatted string
-     */
-    instance.doFormat = function(action, object) {
-        var key = object.id;
-        action = action.toString().toLowerCase();
-        ///////////////////////////
-        // perSecond formatting. //
-        ///////////////////////////
-        if (action == 'persecond') {
-            switch(key) {
-
-                // energy
-                case 'energy':
-                    var input = object.perSecond;
-                    // Fix rounding on large numbers
-                    if (input > 250 || input < -250) {
-                        input = (input*2)/2;
-                        input = Game.settings.format(input).toString();
-                    } else {
-                        input = Game.settings.format(input, 2).toString();
-                    }
-                    // If the storage is full, don't colour persecond green or red
-                    if (object.current >= object.capacity) { return input; }
-                    // input is lower than 0, apply red and maybe bold
-                    if (object.perSecond < 0) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    // turn persecond green
-                    } else {
-                        input.fontcolor('green');
-                    }
-                    return input;
-
-                // science
-                case 'science':
-                    // Do general formatting
-                    var input = object.perSecond;
-                    input = Game.settings.format(input, 1).toString();
-                    
-                    // If the storage is full, don't colour persecond green or red
-                    if (object.current >= object.capacity) { return input; }
-                    // input is lower than 0, apply red and maybe bold
-                    if (object.perSecond < 0) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    // turn persecond green
-                    } else {
-                        input.fontcolor('green');
-                    }
-                    return input; 
-
-                // rocketFuel
-                case 'rocketFuel':
-                    // Do general formatting
-                    var input = object.perSecond;
-                    input = Game.settings.format(input, 1).toString();
-                    // If the storage is full, don't colour persecond green or red
-                    if (object.current >= object.capacity) { return input; }
-                    // input is lower than 0, apply red and maybe bold
-                    if (object.perSecond < 0) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    // turn persecond green
-                    } else {
-                        input.fontcolor('green');
-                    }
-                    return input;
-
-                // Default
-                default:
-                    var input = object.perSecond;
-                    // Do general formatting
-                    input = Game.settings.format(input).toString();
-                    // If the storage is full, don't colour persecond green or red
-                    if (object.current >= object.capacity) { return input; }
-                    // input is lower than 0, apply red and maybe bold
-                    if (object.perSecond < 0) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    // turn persecond green
-                    } else {
-                        input.fontcolor('green');
-                    }
-                    return input;
-            }
-        //////////////////////
-        // Count formatting //
-        //////////////////////
-        } else if (action == 'count') {
-            switch(key) {
-                default:
-                    if (typeof object.amountMax == 'undefined' || object.amountMax == 1 || object.amountMax > 1000) {
-                        var ret = object.amountCurrent.toString().bold();
-                    } else {
-                        var ret = (object.amountCurrent+" / "+object.amountMax).bold();
-                    }
-                    return ret;
-            }
-        ////////////////////////////
-        // Current amount of item //
-        ////////////////////////////
-        } else if (action == 'current') {
-            switch(key) {
-                case 'science':
-                    var input = object.current;
-                    if(object.current < 100){
-                        input = Game.settings.format(input, 1).toString();
-                    } else {
-                        input = Game.settings.format(input, 0).toString();
-                    }
-                    if (object.current >= object.capacity) {
-                        input = input.fontcolor('green');
-                    } else if (object.current < 1) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    }
-                    return input;
-                case 'rocketFuel':
-                    var input = object.current;
-                    if(object.current < 100){
-                        input = Game.settings.format(input, 1).toString();
-                    } else {
-                        input = Game.settings.format(input, 0).toString();
-                    }
-                    if (object.current >= object.capacity) {
-                        input = input.fontcolor('green');
-                    } else if (object.current < 1) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    }
-                    return input;
-                default:
-                    var input = object.current;
-                    input = Game.settings.format(input, 0).toString();
-                    if (object.current >= object.capacity) {
-                        input = input.fontcolor('green');
-                    } else if (object.current < 1) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    }
-                    return input;
-            }
-        ////////////////////////////
-        // Active amount of item //
-        ////////////////////////////
-        } else if (action == 'active') {
-            switch(key) {
-                default:
-                    var input = object.active;
-                    input = Game.settings.format(input, 0).toString();
-                    if (object.active >= object.capacity) {
-                        input = input.fontcolor('green');
-                    } else if (object.active < 1) {
-                        if (Game.settings.entries.boldEnabled) {input.bold();}
-                        input.fontcolor('red');
-                    }
-                    return input;
-            }
-        ////////////////////////////////////
-        // Max storage amount on the menu //
-        ////////////////////////////////////
-        } else if (action == 'capacity') {
-            switch(key) {
-                default:
-                    var input = object.capacity;
-                    var result = [];
-                    result.push(Game.settings.format(input, 0).toString());
-                    // nextStorage
-                    result.push(Game.settings.format(input*2, 0).toString());
-                    return result;
-            }
-        /////////////////////////
-        // Display of any cost //
-        /////////////////////////
-        } else if (action == 'cost') {
-            switch(key) {
-                default:
-                    var cost = object.cost;
-                    var result = '<dl style="margin-bottom:0px;"><table><tr><td><dt>Cost:</dt>';
-                    Object.keys(cost).forEach (function(c) {
-                        if(c == "segment"){
-                            if(Game.solCenter.entries.dyson.items.segment.current >= cost[c]){
-                                var time = "Done!".bold()
-                            } else {
-                                var time = "~~";
-                            }
-                            result += "<dd>&#8227; Dyson Segments: "+Game.settings.format(cost[c], 0).toString()+" ( "+time+" )</dd>"
-                        } else {
-                            if (cost[c] > Game.resources.entries[c].capacity && c != "science" && c != "rocketFuel") {
-                                var time = "Insufficient storage".bold();
-                            } else {
-                                var time = Math.max((cost[c]-Game.resources.entries[c].current)/Game.resources.entries[c].perSecond, 0);
-                                time = ((cost[c] > Game.resources.entries[c].current) ? Game.utils.getTimeDisplay(time, true) : "Done!".bold());
-                            }
-                            result += "<dd>&#8227; "+Game.resources.entries[c].name+": "+Game.settings.format(cost[c], 0).toString()+" ( "+time+" )</dd>"                            
-                        }
-                    });
-                    result += '</td><td style="position:absolute;margin-left:100px">';
-                    if ('storage' in object) {
-                        var storage = object.storage;
-                        var capacity = '';
-                        Object.keys(storage).forEach (function(c) {
-                        capacity += "<dd>&#8227; "+Game.resources.entries[c].name+":&nbsp;&nbsp;"+Game.settings.format(storage[c], 0).toString()+"</dd>";
-                        capacity = '<dl><dt>Storage:</dt>'+capacity;
-                        result += capacity;
-                    });
-
-                    }
-                    if ('resourcePerSecond' in object) {
-                        var ps = object.resourcePerSecond;
-                        var input = '';
-                        var output = '';
-                        Object.keys(ps).forEach (function(c) {
-                            if (ps[c] > 0) {
-                                output += "<dd>&#8227; "+Game.resources.entries[c].name+":&nbsp;&nbsp;"+Game.settings.format(ps[c], 2).toString()+"</dd>";
-                            } else {
-                                var txt = Game.settings.format(Math.abs(ps[c]), 0).toString();
-                                if (Math.abs(ps[c]) > Game.resources.entries[c].perSecond) {
-                                    if (Game.settings.entries.boldEnabled) {txt = txt.bold();}
-                                    txt = txt.fontcolor('red');
-                                } else {txt = txt.fontcolor('green');}
-                                input += "<dd>&#8227; "+Game.resources.entries[c].name+":&nbsp;&nbsp;"+txt+"</dd>";
-                            }
-                        });
-                        if (output == "") {output += "<dd>&#8227; None</dd>"}
-                        if (input == "") {input += "<dd>&#8227; None</dd>"}
-                        output = '<dl><dt>Output:</dt>'+output;
-                        input = '<dl><dt>Input:</dt>'+input;
-                        result += input+output;
-                    }
-                    
-                    return result + '</td></tr></table></dl>';
-            }
-
-        /////////////////////////////////////////
-        // perClick gain number of gainButtons //
-        /////////////////////////////////////////
-        } else if (action == 'gainNum') {
-            switch(key) {
-                default:
-                    var input = object.gainNum;
-                    input = Game.settings.format(input, 0).toString();
-                    return input;
-            }
-
-        /////////////////////////////////////
-        // Progress Bar Percent of Wonders //
-        /////////////////////////////////////
-        } else if (action == 'progress') {
-            switch(key) {
-                default:
-                    var input = Game.wonder.getProgress(object.id);
-                    input = Game.settings.format(input, 1).toString();
-                    return input;
-            }
-        }
-    }
 
     instance.format = function(value, digit) {
         var format = this.entries.formatter || 'shortName';
         return Game.utils.formatters[format](value.toFixed(digit || 0));
+    };
+
+    instance.turnRedOnNegative = function(value, id) {
+        var element = $('#' + id);
+        if(element.length === 0) {
+            console.error("Element not found: " + id);
+            return;
+        }
+
+        if(value < 0){
+            element.addClass('red');
+            if(this.entries.boldEnabled === true){
+                element.addClass('bold');
+            } else {
+                element.removeClass('bold');
+            }
+
+            return true;
+        }
+        else{
+            element.removeClass('red');
+            element.removeClass('bold');
+            return false;
+        }
+    };
+
+    instance.turnRed = function(value, target, id) {
+        var element = $('#' + id);
+        if(element.length === 0) {
+            console.error("Element not found: " + id);
+            return;
+        }
+
+        if(value < target){
+            element.addClass('red');
+            if(this.entries.boldEnabled === true){
+                element.addClass('bold');
+            } else {
+                element.removeClass('bold');
+            }
+        }
+        else{
+            element.removeClass('red');
+            element.removeClass('bold');
+        }
+    };
+
+    instance.turnRedOrGreen = function(value, target, id) {
+        var element = $('#' + id);
+        if(element.length === 0) {
+            console.error("Element not found: " + id);
+            return;
+        }
+
+        if(value === 0){
+            element.addClass('red');
+            if(this.entries.boldEnabled === true){
+                element.addClass('bold');
+            } else {
+                element.removeClass('bold');
+            }
+        }
+        else{
+            element.removeClass('red');
+            element.removeClass('bold');
+        }
+
+        if(value >= target && target >= 0) {
+            element.addClass('green');
+        } else {
+            element.removeClass('green');
+        }
     };
 
     instance.save = function(data) {
@@ -309,6 +111,8 @@ Game.settings = (function(){
     instance.load = function(data) {
         this.loadLegacy(data);
 
+        console.log(this.entries.hideCompleted)
+
         if(data.statistics) {
             if(data.statistics.version && data.statistics.version === this.dataVersion) {
                 for(var id in data.statistics.entries) {
@@ -317,47 +121,50 @@ Game.settings = (function(){
             }
         }
 
+        console.log(this.entries.hideCompleted)
+
         $('#formatSelector').val(this.entries.formatter);
         $('#themeSelector').val(this.entries.theme);
-        if(Game.settings.entries.fps){
-            var slider = document.getElementById("fpsSlider");
-            var output = document.getElementById("fpsVal");
-            slider.value = Game.settings.entries.fps;
-            slider.setAttribute("value", Game.settings.entries.fps);
-            output.innerHTML = slider.value/2;
-            this.fps = slider.value/2;
-            slider.oninput()
+        $('#boldEnabled').prop('checked', this.entries.boldEnabled);
+        $('#sidebarCompressed').prop('checked', this.entries.sidebarCompressed);
+        $('#notificationsEnabled').prop('checked', this.entries.notificationsEnabled);
+        $('#saveNotifsEnabled').prop('checked', this.entries.saveNotifsEnabled);
+        $('#gainButtonsHidden').prop('checked', this.entries.gainButtonsHidden);
+        $('#redDestroyButtons').prop('checked', this.entries.redDestroyButtons);
+        $('#hideCompleted').prop('checked', this.entries.hideCompleted);
+
+        if(Game.settings.entries.sidebarCompressed === true){
+            for(var i = 0; i < document.getElementsByClassName("sideTab").length; i ++){
+                document.getElementsByClassName("sideTab")[i].style.height = "30px";
+            }
+        }
+        else{
+            for(var i = 0; i < document.getElementsByClassName("sideTab").length; i ++){
+                document.getElementsByClassName("sideTab")[i].style.height = "60px";
+            }
         }
 
-        // Bold enabled
-        document.getElementById('boldEnabled').checked = Game.settings.entries.boldEnabled;
-
-        // (un)Compress the sidebar
-        if (Game.settings.entries.sidebarCompressed) {
-            Templates.uiFunctions.addStyle('sideTab', 'height', '30px');
-        } else {
-            Templates.uiFunctions.addStyle('sideTab', 'height', '60px');
+        if(Game.settings.entries.gainButtonsHidden === true){
+            for(var i = 0; i < document.getElementsByClassName("gainButton").length; i ++){
+                document.getElementsByClassName("gainButton")[i].className = "gainButton hidden";
+            }
         }
-        document.getElementById('sidebarCompressed').checked = Game.settings.entries.sidebarCompressed;
-
-        // Notifications Enabled
-        document.getElementById('notificationsEnabled').checked = Game.settings.entries.notificationsEnabled;
-
-        // (un)Hide the gain button
-        if (Game.settings.entries.gainButtonsHidden) {
-            Templates.uiFunctions.addClass('hidden', 'gainButton');
-        } else {
-            Templates.uiFunctions.removeClass('hidden', 'gainButton');
+        else{
+            for(var i = 0; i < document.getElementsByClassName("gainButton").length; i ++){
+                document.getElementsByClassName("gainButton")[i].className = "gainButton";
+            }
         }
-        document.getElementById('gainButtonsHidden').checked = Game.settings.entries.gainButtonsHidden;
 
-        // (un)Red the destroy buttons
-        if (Game.settings.entries.redDestroyButtons) {
-            Templates.uiFunctions.addStyle('destroy', 'backgroundColor', 'red');
-        } else {
-            Templates.uiFunctions.removeStyle('destroy', 'backgroundColor');
+        if(Game.settings.entries.hideCompleted === true){
+            for(var i = 0; i < document.getElementsByClassName("completed").length; i ++){
+                document.getElementsByClassName("completed")[i].className = "completed hidden";
+            }
         }
-        document.getElementById('redDestroyButtons').checked = Game.settings.entries.redDestroyButtons;
+        else{
+            for(var i = 0; i < document.getElementsByClassName("completed").length; i ++){
+                document.getElementsByClassName("completed")[i].className = "completed";
+            }
+        }
         
         for(var id in autoSaveMapping) {
             var element = $('#' + id);
@@ -368,7 +175,7 @@ Game.settings = (function(){
             }
         }
 
-        this.updateTheme();
+        this.reapplyTheme = true;
     };
 
     // backwards compatibility with the old stats
@@ -381,34 +188,31 @@ Game.settings = (function(){
     };
 
     instance.initialise = function() {
-        for (var id in autoSaveMapping) {
-            var element = $('#' + id);
-            element.change({val: autoSaveMapping[id]}, function(args){
-                Game.settings.set('autoSaveInterval', args.data.val);
-            });
-        }
-
-        $('#themeSelector').change(function(){
-            Game.settings.set('theme', $(this).val());
-            Game.settings.updateTheme();
-        });
-
         $('#formatSelector').change(function(){
             Game.settings.set('formatter', $(this).val());
         });
 
-        var slider = document.getElementById("fpsSlider");
-        var output = document.getElementById("fpsVal");
-        output.innerHTML = slider.value;
-        this.fps = parseInt(slider.value);
-
-        slider.oninput = function() {
-          output.innerHTML = this.value;
-          Game.settings.entries.fps = parseInt(this.value);
-        }
+        $('#themeSelector').change(function(){
+            Game.settings.set('theme', $(this).val());
+            Game.settings.reapplyTheme = true;
+        });
 
         $('#boldEnabled').change(function(){
             Game.settings.set('boldEnabled', $(this).is(':checked'));
+        });
+
+        $('#sidebarCompressed').change(function(){
+            Game.settings.set('sidebarCompressed', $(this).is(':checked'));
+            if(Game.settings.entries.sidebarCompressed === true){
+                for(var i = 0; i < document.getElementsByClassName("sideTab").length; i ++){
+                    document.getElementsByClassName("sideTab")[i].style.height = "30px";
+                }
+            }
+            else{
+                for(var i = 0; i < document.getElementsByClassName("sideTab").length; i ++){
+                    document.getElementsByClassName("sideTab")[i].style.height = "60px";
+                }
+            }
         });
 
         $('#notificationsEnabled').change(function(){
@@ -425,7 +229,8 @@ Game.settings = (function(){
                 for(var i = 0; i < document.getElementsByClassName("gainButton").length; i ++){
                     document.getElementsByClassName("gainButton")[i].className = "gainButton hidden";
                 }
-            }else{
+            }
+            else{
                 for(var i = 0; i < document.getElementsByClassName("gainButton").length; i ++){
                     document.getElementsByClassName("gainButton")[i].className = "gainButton";
                 }
@@ -455,10 +260,40 @@ Game.settings = (function(){
                 }
                 
             }
+            else{
+                for(var i = 0; i < document.getElementsByClassName("destroy").length; i ++){
+                    document.getElementsByClassName("destroy")[i].className = "btn btn-default destroy";
+                }
+            }
+        }
+
+        $('#hideCompleted').change(function(){
+            Game.settings.set('hideCompleted', $(this).is(':checked'));
+            if(Game.settings.entries.hideCompleted === true){
+                for(var i = 0; i < document.getElementsByClassName("completed").length; i ++){
+                    document.getElementsByClassName("completed")[i].className = "completed hidden";
+                }
+            }
+            else{
+                for(var i = 0; i < document.getElementsByClassName("completed").length; i ++){
+                    document.getElementsByClassName("completed")[i].className = "completed";
+                }
+            }
+        });
+
+        for (var id in autoSaveMapping) {
+            var element = $('#' + id);
+            element.change({val: autoSaveMapping[id]}, function(args){
+                Game.settings.set('autoSaveInterval', args.data.val);
+            });
         }
     };
 
     instance.update = function(delta) {
+        if(this.reapplyTheme === true) {
+            this.reapplyTheme = false;
+            this.updateTheme();
+        }
     };
 
     instance.updateTheme = function() {
@@ -478,7 +313,7 @@ Game.settings = (function(){
 
     instance.updateCompanyName = function(){
         document.getElementById("companyName").innerHTML = 
-            Game.companyName //Escape unsafe HTML characters in companyName to prevent XXS
+            companyName //Escape unsafe HTML characters in companyName to prevent XXS
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")

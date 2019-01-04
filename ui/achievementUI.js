@@ -59,7 +59,7 @@ Game.achievementsUI = (function(){
         for(var id in Game.achievements.entries) {
             var data = Game.achievements.entries[id];
             
-            totalAchieved += Game.utils.pascal((data.unlocked+1)*2-1);
+            totalAchieved += Game.utils.pascal(data.unlocked+1);
             categoryCounts[data.category].unlocked += data.unlocked + 1;
             categoryCounts[data.category].total += data.brackets.length;
 
@@ -74,6 +74,7 @@ Game.achievementsUI = (function(){
             var id = this.categoryElements[category].id;
             $('#' + id + '_unlocked').text(categoryCounts[category].unlocked);
             $('#' + id + '_total').text(categoryCounts[category].total);
+            
           }
         }
 

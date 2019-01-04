@@ -1,9 +1,7 @@
 function newUnlock(tab){
-	if(!Game.logoAntimating){
-		document.getElementById(tab + "TabGlyph").className = "glyphicon glyphicon-exclamation-sign";
-		if(tab === "more"){
-			document.getElementById("achievementsTabGlyph").className = "pull-right glyphicon glyphicon-exclamation-sign";
-		}
+	document.getElementById(tab + "TabGlyph").className = "glyphicon glyphicon-exclamation-sign";
+	if(tab === "more"){
+		document.getElementById("achievementsTabGlyph").className = "pull-right glyphicon glyphicon-exclamation-sign";
 	}
 }
 

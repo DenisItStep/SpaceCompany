@@ -119,7 +119,7 @@ Game.interstellarUI = (function(){
                 '</td></tr>'].join('\n'));
 
         instance.factionStarTemplate = Handlebars.compile(
-            ['<tr id="{{htmlId}}_conquer" class="hidden"><td colspan="1" id="{{htmlId}}_info">',
+            ['<tr id="{{htmlId}}_conquer" class="hidden"><td colspan="1">',
                 '<h3 class="default btn-link" id="{{htmlId}}_name">{{name}}: <span id="{{htmlId}}_owned">Protected</span></h3>',
                 '<h5>',
                     'Distance: {{distance}}<br>',
@@ -239,11 +239,8 @@ Game.interstellarUI = (function(){
                             '</div>',
                         '</div>',
                     '</div>',
-                '</hide>',
-                '<hide id="{{htmlId}}_planets" class="hidden">',
-                    '<h4 class="btn-link">Planets:</h4>',
-                    '<div id="{{htmlId}}_planetsContainer"></div>',
-                    //Planet Templates
+
+
                 '</hide></td><td colspan="1">',
                 '<h3 class="btn-link">Resource Production:</h3>',
                 '<h4>{{resource1}}:</h4>',
@@ -251,16 +248,6 @@ Game.interstellarUI = (function(){
                 '<h4>{{resource2}}:</h4>',
                 '<span class="star_{{resource2}}_prod">0</span> / Second',
                 '</td></tr>'].join('\n'));
-
-        instance.planetTemplate = Handlebars.compile(
-            ['<h4>{{name}}:</h4>',
-            '<span>Happiness: <span id="{{id}}_happiness">0</span>%</span><br>',
-            '<span>Level: <span id="{{id}}_level">0</span></span>',
-            '<div id="{{id}}_planetContent"></div>',].join('\n'));
-
-        instance.planetBuildingTemplate = Handlebars.compile(
-            ['<h5>{{name}}:<img src="Icons/{{icon}}.png" style="width:70px; height:auto"></h5>',
-            '<span id="{{htmlId}}_cost"></span>',].join('\n'));
 
         instance.invadeShipsTemplate = Handlebars.compile(
             ['<h5>{{name}}: <span class="{{entryName}}Active">0</span>/<span class="{{entryName}}Count">0</span></h5>',
@@ -328,6 +315,9 @@ Game.interstellarUI = (function(){
     };
 
     instance.update = function(delta) {
+        
+        
+
         for(var id in this.commEntries) {
             var data = Game.interstellar.comms.getMachineData(id);
             if(data.displayNeedsUpdate === true) {
@@ -338,6 +328,7 @@ Game.interstellarUI = (function(){
                 }                
             }
         }
+        
 
         for(var id in this.rocketEntries) {
             var data = Game.interstellar.rocket.getRocketData(id);
@@ -346,6 +337,7 @@ Game.interstellarUI = (function(){
             }
         }
         
+
         for(var id in this.rocketPartEntries) {
             var data = Game.interstellar.rocketParts.getPartData(id);
             if(data.displayNeedsUpdate === true) {
@@ -369,6 +361,7 @@ Game.interstellarUI = (function(){
             }
         }
         
+
         // Hides navs
         for(var id in Game.interstellar.entries){
             var data = Game.interstellar.getInterstellarData(id);
@@ -378,7 +371,7 @@ Game.interstellarUI = (function(){
                     if(data.category == "faction"){
                         document.getElementById("interstellarTab_faction_collapse").className = "";
                     }
-                    document.getElementById("interstellarTab").className = "";
+                    document.getElementById("interstellarTab_link").className = "";
                     document.getElementById("interstellarTab_" + id + "_ne").className = "collapse_interstellarTab_" + data.category;
                 } else {
                     document.getElementById("interstellarTab_" + id + "_ne").className = "collapse_interstellarTab_" + data.category + " hidden";
@@ -399,7 +392,7 @@ Game.interstellarUI = (function(){
                 if(Game.interstellar.comms.entries.IRS.count + Game.interstellar.comms.entries.astroBreakthrough.count*5 >= data.distance){
                     document.getElementById('star_' + id).className = "";
                 }
-                $('#star_' + id + 'Cost').text(Game.settings.format(data.distance*Game.interstellar.stars.distanceMultiplier));
+                $('#star_' + id + 'Cost').text(Game.settings.format(data.distance*10000));
                 continue;
             }
             if(data.displayNeedsUpdate == false){
@@ -418,18 +411,7 @@ Game.interstellarUI = (function(){
                 if(data.owned){
                     $('#star_' + id + '_owned').text("Conquered");
                     document.getElementById('star_' + id + '_conquerButtons').className = "hidden";
-                    document.getElementById('star_' + id + '_planets').className = "";
-                    for(var planet in data.items){
-                        var planetData = data.items[planet]
-                        var planetHtmlId = '#' + data.id + "_" + planet;
-                        $(planetHtmlId + "_happiness").text(planetData.happiness);
-                        var target = $(planetHtmlId + "_planetContent").text(planetData.buildings[planetData.level].name);
-                        var html = this.planetBuildingTemplate(planetData.buildings[planetData.level]);
-                        target.empty();
-                        target.append($(html));
-                    }
                 } else {
-                    console.log("unlock");
                     $('#star_' + id + '_owned').text("Protected");
                     document.getElementById('star_' + id + '_conquerButtons').className = "";
 
@@ -492,7 +474,7 @@ Game.interstellarUI = (function(){
                     }
                 }
             }
-            data.displayNeedsUpdate = false;          
+            data.displayNeedsUpdate = false;
         }
 
         // Updates Antimatter Nav
@@ -508,14 +490,12 @@ Game.interstellarUI = (function(){
         }
         
 
-        for(var id in Game.resources.entries){
-            var data = Game.resources.entries[id];
-            if(data.manualGain){
-                var updateList = document.getElementsByClassName("star_" + data.name + "_prod");
-                for(var j = 0; j < updateList.length; j++){
-                    updateList[j].innerHTML = Game.settings.format(data.perSecond/4);
-                }
-            }
+        for(var i = 0; i < resources.length; i++){
+            var updateList = document.getElementsByClassName("star_" + Game.utils.capitaliseFirst(resources[i]) + "_prod");
+            var perSec = window[resources[i] + "ps"];
+            for(var j = 0; j < updateList.length; j++){
+                updateList[j].innerHTML = Game.settings.format(perSec/4);
+            }            
         }
         
     };
@@ -613,17 +593,10 @@ Game.interstellarUI = (function(){
         var factionTabContentRoot = $('#' + this.tab.getContentElementId(starData.factionId));
         factionTabContentRoot.append($(factionStar));
 
-        for(var ship in Game.interstellar.military.entries){
+        for(ship in Game.interstellar.military.entries){
             var shipData = Game.interstellar.military.getShipData(ship);
             var target = $('#' + starData.htmlId + '_invadeShips');
             var html = this.invadeShipsTemplate(shipData);
-            target.append($(html));
-        }
-
-        for(var planet in starData.items){
-            var planetData = starData.items[planet];
-            var target= $('#' + starData.htmlId + '_planetsContainer');
-            var html = this.planetTemplate(planetData);
             target.append($(html));
         }
     };
@@ -913,7 +886,7 @@ Game.interstellarUI = (function(){
 
     
 
-    //Game.uiComponents.push(instance);
+    Game.uiComponents.push(instance);
 
     return instance;
 

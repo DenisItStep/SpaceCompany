@@ -6,7 +6,6 @@ Game.interstellar = (function(){
     instance.entries = {};
     instance.categoryEntries = {};
     instance.navCount = 0;
-    instance.tabUnlocked = false;
 
 	instance.initialise = function (){
 		for (var id in Game.interstellarData) {
@@ -19,6 +18,7 @@ Game.interstellar = (function(){
                 current: 0,
                 displayNeedsUpdate: true
             });
+            
         }
 
         console.debug("Loaded " + this.navCount + " Interstellar Navs");
@@ -28,11 +28,7 @@ Game.interstellar = (function(){
         this.antimatter.initialise();
         this.military.initialise();
         this.stars.initialise();
-	};
-
-    instance.update = function(delta){
-
-    };
+	}
 
 	instance.getInterstellarData = function(id) {
         return this.entries[id];
@@ -89,10 +85,6 @@ Game.interstellar = (function(){
             }
             if(typeof data.interstellar.stars !== 'undefined'){
                 for(id in data.interstellar.stars){
-                    if(id == "buildings"){
-                        data.interstellar.stars[id] = undefined;
-                        continue;
-                    }
                     this.stars.entries[id].explored = data.interstellar.stars[id].explored;
                     this.stars.entries[id].owned = data.interstellar.stars[id].owned;
                     this.stars.entries[id].spy = data.interstellar.stars[id].spy;
@@ -101,20 +93,24 @@ Game.interstellar = (function(){
         }
         this.military.updateShips();
         this.military.updateFleetStats();
-        // Delete
-        // document.getElementById("interstellarTab_link").className = "";
-        // antimatter = 100000;
-        // Game.interstellar.rocket.entries.tier1Rocket.built = true;
-        // Game.interstellar.comms.entries.IRS.count = 100;
-        // Game.interstellar.stars.entries._601.explored = true;
-        // Game.interstellar.stars.entries._601.owned = true;
-        // var data = Game.interstellar.entries["moviton"];
-        // data.unlocked = data.displayNeedsUpdate = true;
-        // console.error("only for testing");
-        // Delete
     };
 
     instance.redundantChecking = function(){
+        var objects = ["comms", "rocket", "antimatter", "stargate"];
+        for(var i = 0; i < objects.length; i++){
+            if(contains(activated, objects[i]) == true){
+                if(objects[i] == 'stargate'){
+                    this.entries['travel'].unlocked = true;
+                    this.entries['travel'].displayNeedsUpdate = true;
+                    this.entries['military'].unlocked = true;
+                    this.entries['military'].displayNeedsUpdate = true;
+                } else {
+                    this.entries[objects[i]].unlocked = true;
+                    this.entries[objects[i]].displayNeedsUpdate = true;
+                }
+                document.getElementById("interstellarTab").className = "";
+            }
+        }
         for(var id in this.stars.entries){
             var data = this.stars.getStarData(id);
             if(data.explored == true){
@@ -131,15 +127,9 @@ Game.interstellar = (function(){
         }
 
         // stargaze
-        if(Game.solCenter.entries.dyson.items.sphere.current != 0){
+        if(sphere != 0){
             Game.stargaze.unlocked = true;
         }
-    };
-
-    instance.unlock = function(id) {
-        document.getElementById("interstellarTab_link").className = "";
-        this.entries[id].unlocked = true;
-        this.entries[id].displayNeedsUpdate = true;
     };
 
 	return instance;
@@ -169,7 +159,7 @@ Game.interstellar.comms = (function(){
     };
 
     instance.calcCost = function(self, resource){
-        return Math.floor(self.defaultCost[resource] * Math.pow(1.1,self.count));
+        return Math.floor(self.defaultCost[resource.toString()] * Math.pow(1.1,self.count));
     };
 
     instance.updateCost = function(entryName){
@@ -177,8 +167,8 @@ Game.interstellar.comms = (function(){
             var target = 0;
             for(var i = 0; i < Object.keys(Game.interstellarUI.commObservers[entryName]).length; i++){
                 if(resource == Game.interstellarUI.commObservers[entryName][i].resource){
-                    this.entries[entryName].cost[resource] = this.calcCost(this.entries[entryName], resource);
-                    Game.interstellarUI.commObservers[entryName][i].value = this.entries[entryName].cost[resource];
+                    this.entries[entryName].cost[resource.toString()] = this.calcCost(this.entries[entryName], resource);
+                    Game.interstellarUI.commObservers[entryName][i].value = this.entries[entryName].cost[resource.toString()];
                 }
             }
         }
@@ -192,14 +182,14 @@ Game.interstellar.comms = (function(){
         }
         var resourcePass = 0;
         for(var resource in data.cost){
-            if(Game.resources.entries[resource] >= data.cost[resource]){
+            if(window[resource.toString()] >= data.cost[resource.toString()]){
                 resourcePass += 1;
             }
         }
         if(resourcePass === Object.keys(data.cost).length){
             data.count += 1;
             for(var resource in data.cost){
-                Game.resources.entries[resource] -= data.cost[resource];
+                window[resource.toString()] -= data.cost[resource.toString()];
             }            
             data.displayNeedsUpdate = true;
         }
@@ -241,7 +231,7 @@ Game.interstellar.antimatter = (function(){
     };
 
     instance.calcCost = function(self, resource){
-        return Math.floor(self.defaultCost[resource] * Math.pow(1.1,self.count));
+        return Math.floor(self.defaultCost[resource.toString()] * Math.pow(1.1,self.count));
     };
 
     instance.updateCost = function(entryName){
@@ -249,8 +239,8 @@ Game.interstellar.antimatter = (function(){
             var target = 0;
             for(var i = 0; i < Object.keys(Game.interstellarUI.antimatterObservers[entryName]).length; i++){
                 if(resource == Game.interstellarUI.antimatterObservers[entryName][i].resource){
-                    this.entries[entryName].cost[resource] = this.calcCost(this.entries[entryName], resource);
-                    Game.interstellarUI.antimatterObservers[entryName][i].value = this.entries[entryName].cost[resource];
+                    this.entries[entryName].cost[resource.toString()] = this.calcCost(this.entries[entryName], resource);
+                    Game.interstellarUI.antimatterObservers[entryName][i].value = this.entries[entryName].cost[resource.toString()];
                 }
             }
         }
@@ -261,14 +251,14 @@ Game.interstellar.antimatter = (function(){
         var data = this.entries[entryName];
         var resourcePass = 0;
         for(var resource in data.cost){
-            if(Game.resources.entries[resource].current >= data.cost[resource]){
+            if(window[resource.toString()] >= data.cost[resource.toString()]){
                 resourcePass += 1;
             }
         }
         if(resourcePass === Object.keys(data.cost).length){
             data.count += 1;
             for(var resource in data.cost){
-                Game.resources.entries[resource].current -= data.cost[resource];
+                window[resource.toString()] -= data.cost[resource.toString()];
             }            
             data.displayNeedsUpdate = true;
         }
@@ -326,7 +316,7 @@ Game.interstellar.military = (function(){
     };
 
     instance.calcCost = function(self, resource){
-        return Math.floor(self.defaultCost[resource] * Math.pow(1.1,self.count));
+        return Math.floor(self.defaultCost[resource.toString()] * Math.pow(1.1,self.count));
     };
 
     instance.updateCost = function(entryName){
@@ -334,8 +324,8 @@ Game.interstellar.military = (function(){
             var target = 0;
             for(var i = 0; i < Object.keys(Game.interstellarUI.militaryObservers[entryName]).length; i++){
                 if(resource == Game.interstellarUI.militaryObservers[entryName][i].resource){
-                    this.entries[entryName].cost[resource] = this.calcCost(this.entries[entryName], resource);
-                    Game.interstellarUI.militaryObservers[entryName][i].value = this.entries[entryName].cost[resource];
+                    this.entries[entryName].cost[resource.toString()] = this.calcCost(this.entries[entryName], resource);
+                    Game.interstellarUI.militaryObservers[entryName][i].value = this.entries[entryName].cost[resource.toString()];
                 }
             }
         }
@@ -346,14 +336,14 @@ Game.interstellar.military = (function(){
         var resourcePass = 0;
         var ship = this.entries[entryName];
         for(var resource in ship.cost){
-            if(Game.resources.entries[resource].current >= ship.cost[resource]){
+            if(window[resource.toString()] >= ship.cost[resource.toString()]){
                 resourcePass += 1;
             }
         }
         if(resourcePass === Object.keys(ship.cost).length){
             ship.count += 1;
             for(var resource in ship.cost){
-                Game.resources.entries[resource].current -= ship.cost[resource];
+                window[resource.toString()] -= ship.cost[resource.toString()];
             }            
             ship.displayNeedsUpdate = true;
         }
@@ -376,13 +366,12 @@ Game.interstellar.military = (function(){
         }
         if(number != 0){
             stats.speed = Math.floor(stats.speed/number);
-            console.log("disabled until can be optimised with new new system")
-            // for(var stat in stats){
-            //     var updateList = document.getElementsByClassName("fleet" + Game.utils.capitaliseFirst(stat));
-            //     for(var j = 0; j < updateList.length; j++){
-            //         updateList[j].innerHTML = stats[stat];
-            //     }
-            // }
+            for(var stat in stats){
+                var updateList = document.getElementsByClassName("fleet" + Game.utils.capitaliseFirst(stat));
+                for(var j = 0; j < updateList.length; j++){
+                    updateList[j].innerHTML = stats[stat];
+                }
+            }
             this.power = stats.power;
             this.defense = stats.defense;
             this.speed = stats.speed;
@@ -401,32 +390,30 @@ Game.interstellar.military = (function(){
         }
         stats.speed = Math.floor(stats.speed/number);
         if(number == 0)stats.speed = 0;
-        console.log("disabled until can be optimised with new new system")
-        // for(var stat in stats){
-        //     var updateList = document.getElementsByClassName("activeFleet" + Game.utils.capitaliseFirst(stat));
-        //     for(var j = 0; j < updateList.length; j++){
-        //         updateList[j].innerHTML = stats[stat];
-        //     }
-        // }
+        for(var stat in stats){
+            var updateList = document.getElementsByClassName("activeFleet" + Game.utils.capitaliseFirst(stat));
+            for(var j = 0; j < updateList.length; j++){
+                updateList[j].innerHTML = stats[stat];
+            }
+        }
         this.activePower = stats.power;
         this.activeDefense = stats.defense;
         this.activeSpeed = stats.speed;
     };
 
     instance.updateShips = function(){
-        console.log("disabled until can be optimised with new new system")
-        // for(var ship in this.entries){
-        //     if(this.entries[ship].displayNeedsUpdate == true){
-        //         var updateList = document.getElementsByClassName(ship + "Count");
-        //         for(var i = 0; i < updateList.length; i++){
-        //             updateList[i].innerHTML = this.entries[ship].count;
-        //         }
-        //         var activeUpdateList = document.getElementsByClassName(ship + "Active");
-        //         for(var i = 0; i < activeUpdateList.length; i++){
-        //             activeUpdateList[i].innerHTML = this.entries[ship].active;
-        //         }
-        //     }
-        // }
+        for(var ship in this.entries){
+            if(this.entries[ship].displayNeedsUpdate == true){
+                var updateList = document.getElementsByClassName(ship + "Count");
+                for(var i = 0; i < updateList.length; i++){
+                    updateList[i].innerHTML = this.entries[ship].count;
+                }
+                var activeUpdateList = document.getElementsByClassName(ship + "Active");
+                for(var i = 0; i < activeUpdateList.length; i++){
+                    activeUpdateList[i].innerHTML = this.entries[ship].active;
+                }
+            }
+        }
     };
 
     instance.addShip = function(shipName, num){
@@ -556,9 +543,6 @@ Game.interstellar.military = (function(){
                 var faction = Game.stargaze.getStargazeData(star.factionId);
                 faction.opinion -= 10;
                 faction.displayNeedsUpdate = true;
-                for(var planet in star.items){
-                    star.items[planet].happiness = 0;
-                };
             } else {
                 for(var ship in this.entries){
                     var shipData = this.getShipData(ship);

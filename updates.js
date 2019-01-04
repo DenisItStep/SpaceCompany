@@ -3,7 +3,7 @@ Game.updates = (function(){
 	var instance = {};
 	instance.entries = [];
 
-	instance.versionNumber = 2;
+	instance.versionNumber = 1;
 	instance.updateRead = false;
 
 	instance.updateTitleTemplate = Handlebars.compile(['<div id="updateAlert" class="alert alert-info alert-dismissible fade in">',
@@ -14,7 +14,7 @@ Game.updates = (function(){
 	instance.updateTemplate = Handlebars.compile('<li><span>{{desc}}</span></li>');
 
 	instance.initialise = function(){
-		if(Game.resources.entries.metal.current != 0){
+		if(metal != 0){
 			var extra = 0;
 			var target = $('#updateBox');
 			var html = this.updateTitleTemplate();
@@ -58,9 +58,9 @@ Game.updates = (function(){
 	}
 
 	instance.save = function(data){
-		data.updates = {versionNumber: 2, entries: {}};
+		data.updates = {versionNumber: 1, entries: {}};
 		for(var id in Game.updatesData){
-			data.updates.entries[id] = Game.updatesData[id].read;
+			data.updates.entries[id] = Game.updatesData[id];
 		}
 	}
 
@@ -70,12 +70,6 @@ Game.updates = (function(){
 				Game.updates.versionNumber = data.versionNumber;
 				for(var id in data.updates.entries){
 					Game.updatesData[id] = data.updates.entries[id];
-				}
-			}
-			if(data.updates.versionNumber && data.updates.versionNumber == 2){
-				Game.updates.versionNumber = data.versionNumber;
-				for(var id in data.updates.entries){
-					Game.updatesData[id].read = data.updates.entries[id];
 				}
 			}
 		}
@@ -232,26 +226,6 @@ Game.updatesData = (function(){
 		desc: 'Live counter showing how much DM you will get from each section',
 		read: false
 	};
-
-	instance.energyEffBug = {
-		desc: 'Fixed the 25/50 max Energy Efficiency Bug',
-		read: false
-	};
-
-	instance.oopResource = {
-		desc: 'Completely reworked the whole code of the resources tab to make features significantly easier to add and edit',
-		read: false
-	}
-
-	instance.changeResourceOrder = {
-		desc: 'Moved around the resources to a more logical order',
-		read: false
-	}
-
-	instance.storageBar = {
-		desc: 'Added a storage bar to the top of the screen',
-		read: false
-	}
 
 	return instance;
 
