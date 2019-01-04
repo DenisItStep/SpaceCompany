@@ -39,7 +39,7 @@
             return;
         }
 
-        this.element.setText(newValue);
+        this.element.text(newValue);
         this.value = newValue;
     };
 

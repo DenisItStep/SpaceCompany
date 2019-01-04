@@ -247,7 +247,6 @@ Game.tech = (function(){
     instance.isMaxLevel = function(id) {
         var tech = this.getTechData(id);
         if (typeof tech !== 'undefined') {
-            if(id == 'energyEfficiencyResearch') return false;
             return tech.maxLevel > 0 && tech.current >= tech.maxLevel;
         }
         return false;

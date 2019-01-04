@@ -11,7 +11,7 @@ Currently, the game is in Beta, which means there is frequent, active developmen
 
 # RoadMap
 
-v1.0 The Overlord Update
+v0.6.0 The Lore Update
 https://www.reddit.com/r/SpaceCompany/wiki/futureplans#wiki_v0.6
 
 - Adding Lore onto every Building and an introduction to your Space Company
@@ -42,7 +42,6 @@ v0.5.1
 - Respec
 - Meteorite Tier 3 and 4
 - Live counter showing how much DM you will get from each section
-- Fixed Energy Efficiency 25/50 max bug
 
 ##### Small Changes
 

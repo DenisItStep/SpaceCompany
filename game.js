@@ -162,9 +162,10 @@ var Game = (function() {
             this.statistics.load(data);
             this.resources.load(data);
             this.buildings.load(data);
-            this.stargaze.load(data);
             this.tech.load(data);
-            this.interstellar.load(data); 
+            
+            this.interstellar.load(data);
+            this.stargaze.load(data);
             this.updates.load(data);
 
             legacyLoad(data);

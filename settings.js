@@ -21,7 +21,6 @@ Game.settings = (function(){
             theme: 'base',
             autoSaveInterval: 30 * 1000
         },
-        elementCache: {},
         reapplyTheme: true
     };
 
@@ -30,77 +29,69 @@ Game.settings = (function(){
         return Game.utils.formatters[format](value.toFixed(digit || 0));
     };
 
-    instance.getEl = function(id) {
-        var element = this.elementCache[id];
-        if(!element) {
-            element = $('#' + id);
-            if(element.length > 0) {
-                this.elementCache[id] = element;
-            }
-        }
-        return element;
-    };
-
     instance.turnRedOnNegative = function(value, id) {
-        var element = this.getEl(id);
+        var element = $('#' + id);
         if(element.length === 0) {
             console.error("Element not found: " + id);
             return;
         }
 
         if(value < 0){
+            element.addClass('red');
             if(this.entries.boldEnabled === true){
-                element.addClass('red bold');
+                element.addClass('bold');
             } else {
-                element.addClass('red');
                 element.removeClass('bold');
             }
 
             return true;
         }
         else{
-            element.removeClass('red bold');
+            element.removeClass('red');
+            element.removeClass('bold');
             return false;
         }
     };
 
     instance.turnRed = function(value, target, id) {
-        var element = this.getEl(id);
+        var element = $('#' + id);
         if(element.length === 0) {
             console.error("Element not found: " + id);
             return;
         }
 
         if(value < target){
+            element.addClass('red');
             if(this.entries.boldEnabled === true){
-                element.addClass('red bold');
+                element.addClass('bold');
             } else {
-                element.addClass('red');
                 element.removeClass('bold');
             }
         }
         else{
-            element.removeClass('red bold');
+            element.removeClass('red');
+            element.removeClass('bold');
         }
     };
 
     instance.turnRedOrGreen = function(value, target, id) {
-        var element = this.getEl(id);
+        var element = $('#' + id);
         if(element.length === 0) {
             console.error("Element not found: " + id);
             return;
         }
 
         if(value === 0){
+            element.addClass('red');
             if(this.entries.boldEnabled === true){
-                element.addClass('red bold');
+                element.addClass('bold');
             } else {
-                element.addClass('red');
                 element.removeClass('bold');
             }
         }
         else{
-            element.removeClass('red bold');
+            element.removeClass('red');
+            element.removeClass('bold');
         }
 
         if(value >= target && target >= 0) {
@@ -321,7 +312,13 @@ Game.settings = (function(){
     };
 
     instance.updateCompanyName = function(){
-      document.getElementById("companyName").textContent = companyName;
+        document.getElementById("companyName").innerHTML = 
+            companyName //Escape unsafe HTML characters in companyName to prevent XXS
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#x27;");
     }
 
     return instance;
