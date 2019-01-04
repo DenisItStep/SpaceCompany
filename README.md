@@ -3,34 +3,13 @@ Space Company is a science-fiction incremental game where you start from humble 
 
 Currently, the game is in Beta, which means there is frequent, active development on the game and most bugs from existing features will have been fixed. You should not have to worry about your saves being wiped. However, there will be the occasional bug and I will endeavour to amend these.
 
-# Plans for the Future
-- Check https://www.reddit.com/r/SpaceCompany/wiki/futureplans
-- When loading game, the tab you left on is the tab you now start on
-- Random Events
-- [Change UI from bootstrap to my own]
-
 # RoadMap
 
-v0.6.0 The Lore Update
-https://www.reddit.com/r/SpaceCompany/wiki/futureplans#wiki_v0.6
-
-- Adding Lore onto every Building and an introduction to your Space Company
-- Rebalance all costs to not use as much Lunarite/Gems
-- Loading screen flavour text changes as you progress
-- Machine Overview Tab
-
-v0.5.1
-
-- (Mass to Energy Conversion)
-- Buy X buttons
-- Buy Max/Custom Buttons
-- Change Letter Formatting To Start At 100K
-- Rebalance Science
-- Change Icons (white circle with icon inside)
+- Check our Trello Board! https://trello.com/b/3JDTz7E7/space-company
 
 # Changelog:
 
-### v0.5.1 (includes all V0.5.0.X)
+### v0.5.0.6 (includes all V0.5.0.X)
 ##### Features
 
 - Storage Upgrade Discounts
@@ -42,6 +21,8 @@ v0.5.1
 - Respec
 - Meteorite Tier 3 and 4
 - Live counter showing how much DM you will get from each section
+- Fixed Energy Efficiency 25/50 max bug
+- Completely Reworked the code of the Resources Tab to make features significantly easier to add and edit
 
 ##### Small Changes
 

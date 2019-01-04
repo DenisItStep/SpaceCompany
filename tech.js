@@ -1,42 +1,65 @@
 Game.tech = (function(){
 
+    function UpdateCurrent(id) {
+        var previous = -1;
+        var id = id;
+        this.update = function() {
+            var obj = Game.tech.entries[id];
+            if (obj.current == previous) {return;}
+            var value = Game.settings.doFormat('current', obj);
+            Templates.uiFunctions.setClassText(value, obj.htmlId+'current');
+            previous = obj.current;
+            return true;
+        }
+    }
+
+    function UpdateCost(id) {
+        var previous = new Date();
+        var id = id;
+        this.update = function() {
+            var obj = Game.tech.entries[id];
+            if (new Date() - previous < 250 || obj.current == obj.maxLevel || !obj.unlocked) {return;}
+            var costObj = {cost:{"science":Game.tech.getCost(obj.cost.science, obj.current)}};
+            var value = Game.settings.doFormat('cost', costObj);
+            Templates.uiFunctions.setClassText(value, obj.htmlId+'cost');
+            previous = new Date();
+            return true;
+        }
+    }
+
     var instance = {};
 
     instance.dataVersion = 2;
     instance.entries = {};
     instance.techTypeCount = 0;
+    instance.tabUnlocked = false;
 
     instance.initialise = function() {
-        Game.techUI.initialise();
-        for (var id in Game.techData) {
-            var data = this.initTech(id);
+        for(var id in Game.techData) {
+            var data = Game.techData[id];
+            this.entries[id]  = $.extend({}, data, {
+                id: id,
+                htmlId: 'tec_'+id,
+                page: 'research',
+                ui_current: new UpdateCurrent(id),
+                ui_cost: new UpdateCost(id),
+            });
             this.techTypeCount++;
-            this.entries[id] = data;
-
-            Game.techUI.addTech(data);
         }
         console.debug("Loaded " + this.techTypeCount + " Tech Types");
     };
 
-    instance.initTech = function(id) {
-        // using extend to create a new object and leave the defaults unchanged
-        var data = jQuery.extend({}, Game.techData[id]);
-        data.setId(id);
-        return data;
-    };
-
-    instance.reset = function() {
-        for (var id in Game.techData) {
-            var data = this.initTech(id);
-            this.entries[id] = data;
-
-            Game.techUI.replaceTech(data);
+    instance.update = function(delta) {
+        var science = Game.resources.entries.science.current;
+        for(var id in this.entries){
+            if(this.entries[id].costType == 1 && !this.entries[id].unlocked){
+                if(science >= this.entries[id].cost["science"]){
+                    this.entries[id].unlocked = true;
+                    Templates.uiFunctions.unlock(id);
+                }
+            }
         }
-        refreshResearches();
-        console.debug("Loaded " + this.techTypeCount + " Tech Types");
     };
-
-    instance.update = function(delta) {};
 
     instance.save = function(data) {
         data.tech = { v: this.dataVersion, i: {}};
@@ -62,6 +85,31 @@ Game.tech = (function(){
                 child.parentNode.removeChild(child);
             }
         }
+        if(Game.buildings.entries.metalT1.current >= 1){
+            Templates.uiFunctions.unlock('scienceT1');
+            Game.tech.unlockTech("unlockStorage");
+            Game.tech.unlockTech("unlockBasicEnergy");
+            // Unlock the science resourceCategory
+            Game.resourceCategoryData.science.unlocked = true;
+            // Unlock the science resource
+            Game.resources.entries.science.unlocked = true;
+            // Unlock scienceT1
+            Game.buildings.entries.scienceT1.unlocked = true;
+            // Unlock the research category
+            Game.techCategoryData.unlocked = true;
+            Game.techCategoryData.research.unlocked = true;
+            // Unlock the technology type of research items
+            Game.techCategoryData.research.items.technology.unlocked = true;
+            Game.tech.tabUnlocked = true; 
+        }
+        // Update the cost of techs
+        Object.keys(Game.tech.entries).forEach(function(tech) {
+            let cost = Game.tech.entries[tech].cost;
+            let amount = Game.tech.entries[tech].current;
+            let newCost = {};
+            Object.keys(cost).forEach(c => newCost[c] = Math.floor(cost[c]*Math.pow(1.1, amount)));
+            Game.tech.entries[tech].cost = newCost;
+        })
     };
 
     // handle loading a save with dataVersion 1
@@ -79,6 +127,7 @@ Game.tech = (function(){
                 this.entries[data.researched[id]].current = 1;
             }
         }
+
         for (id in data.tech.i) {
             if (this.entries[id] && !isNaN(data.tech.i[id]) && data.tech.i[id] > 0) {
                 this.gainTech(id, data.tech.i[id]);
@@ -93,76 +142,111 @@ Game.tech = (function(){
             if (typeof this.entries[id] !== 'undefined') {
                 if (typeof data.tech.i[id].current !== 'undefined' && data.tech.i[id].current > 0) {
                     this.entries[id].current = 0;
-                    this.gainTech(id, data.tech.i[id].current);
+                    this.gainTech(id, data.tech.i[id].current, false);
                     // we can assume that the tech is unlocked if it has been purchased
                     this.entries[id].unlocked = true;
+                    // unlock the tech that this tech unlocks
                 } else if (typeof data.tech.i[id].unlocked !== 'undefined') {
                     this.entries[id].unlocked = data.tech.i[id].unlocked;
                 }
             }
         }
+        for (var id in data.tech.i) {
+            if (typeof this.entries[id] !== 'undefined') {
+                if (typeof data.tech.i[id].current !== 'undefined' && data.tech.i[id].current > 0) {
+                    // unlock the tech that this tech unlocks
+                    this.unlockNewTechs(id);
+                    this.hideIfMax(id);
+                }
+                if(this.entries[id].costType == 1 && this.entries[id].unlocked){
+                    Templates.uiFunctions.unlock(id);
+                }
+            }
+        }
+        
+        Templates.uiFunctions.refreshElements('all', 'all');
     };
 
     instance.unlockTech = function(id) {
         var tech = this.getTechData(id);
         if (typeof tech !== 'undefined') {
             tech.unlocked = true;
+            if(tech.current < tech.maxLevel && tech.maxLevel > 0){
+                Templates.uiFunctions.unlock(id);
+            }
         }
     };
+
+
+// Create an empty object to create a sum of profits and losses
+// var materials = Object.keys(Obj).reduce((o, key) => Object.assign(o, {[key]: 0}), {});
+
+
+    instance.hideIfMax = function(id){
+        var data = this.entries[id];
+        if (data.current >= data.maxLevel && data.maxLevel > 0) {
+            Game.statistics.add('techResearched');
+            Templates.uiFunctions.hide(data.id);
+        }
+    }
+    
+    instance.unlockNewTechs = function(id) {
+        var tech = this.getTechData(id);
+        if (typeof tech !== 'undefined') { tech.unlocked = true; }
+        // newTechs: ['unlockOil'],
+        if ('newTechs' in tech) {
+            var newTechs = tech.newTechs;
+            // .unlockOil_Container => unlock('unlockOil')
+            newTechs.forEach(t => Game.tech.unlockTech(t));
+        }
+    };
+
+    instance.doPurchase = function(Obj) {
+        // Loop over the costs and subtract them from .current
+        Object.keys(Obj.cost).forEach(c => Game.resources.entries[c].current -= this.getCost(Obj.cost[c], Obj.current))
+        // increase its current
+        Obj.current++
+        // Update the UI - Let's recalculate everything in case of efficiency research
+        Templates.uiFunctions.refreshElements('all', 'all');
+    }
+
+    /**
+     * Internal function.  Not accessible from outside so we need less security.
+     * Checks if an object (Obj.cost) is affordable, this can be any object
+     * which costs are all in Game.resources.entries
+     * @param  {Object}  Obj Object like Game.buildings.entries.metalT1
+     * @return {Boolean}     True on affordable, false if not.
+     */
+    instance.isAffordable = function(Obj) {
+        // Loop over the cost, cost for tech is a positive number
+        if (Object.keys(Obj.cost).every(c => (Game.resources.entries[c].current-this.getCost(Obj.cost[c], Obj.current)) > 0)) {
+            return true;
+        }
+        return false;
+    }
 
     // return true if the tech is purchased successfully, false otherwise
     instance.buyTech = function(id, count) {
-        var tech = this.getTechData(id);
-        if (typeof tech === 'undefined') {
-            return false;
+        if (!(id in this.entries)) {return false;}
+        if (count != parseInt(count) && count <= 0) {return false;}
+        while (count > 0) {
+            // Stop the loop if the next machine isn't affordable
+            if (!this.isAffordable(this.entries[id])) {break;}
+            // Stop the loop if max level is reached.
+            if (this.entries[id].current == this.entries[id].maxLevel) {break;}
+            // Buy the item
+            this.doPurchase(this.entries[id]);
+            // Perform onBought
+            this.applyTechEffect(id);
+            // Unlock new techs.
+            this.unlockNewTechs(id);
+            // Hide if max level
+            this.hideIfMax(id);
+            count--;
         }
-
-        // ensure a valid value for count
-        if(isNaN(count) || count === undefined) {
-            count = 1;
-        }
-        // if there's a max level defined then the count may need to be clamped
-        if (tech.maxLevel > 0) {
-            count = Math.min(tech.maxLevel - tech.current, count);
-            if (count <= 0) {
-                // the tech is at or above max level, can't buy it
-                return false;
-            }
-        }
-
-        // create a new object for cost to avoid reference issues
-        var cost = {};
-        if (tech.costType === COST_TYPE.FIXED) {
-            if (tech.current > 0 || count > 1) {
-                // this calculation could be done more elegantly with math
-                for (var resource in tech.cost) {
-                    cost[resource] = 0;
-                }
-                for (var i = 0; i < count; i++) {
-                    for (var resource in tech.cost) {
-                        cost[resource] += getCost(tech.cost[resource], tech.current + i);
-                    }
-                }
-            } else {
-                // the predefined base cost can be used
-                for (var resource in tech.cost) {
-                    cost[resource] = tech.cost[resource];
-                }
-            }
-        } else {
-            return false;
-        }
-
-        if (!this.hasResources(cost)) {
-            return false;
-        }
-
-        this.spendResources(cost);
-        this.gainTech(id, count);
-        return true;
     };
 
-    instance.gainTech = function(id, count) {
+    instance.gainTech = function(id, count, refresh) {
         this.removeTechEffect(id);
 
         if(isNaN(count) || count === undefined) {
@@ -179,6 +263,10 @@ Game.tech = (function(){
         this.entries[id].current = finalValue;
 
         this.applyTechEffect(id);
+        if(refresh == false){
+            return false;
+        }
+        Templates.uiFunctions.refreshElements('all', 'all');
     };
 
     instance.removeTech = function(id, count) {
@@ -192,7 +280,14 @@ Game.tech = (function(){
         var newValue = Math.floor(this.entries[id].current - count);
         this.entries[id].current = Math.max(newValue, 0);
 
-        this.applyTechEffect(id);
+        Templates.uiFunctions.refreshElements('all', 'all');
+    };
+
+    instance.updateEfficiencies = function(){
+    };
+
+    instance.getCost = function(basePrice, amount, multiplier) {
+        return Math.floor(basePrice * Math.pow(multiplier || 1.1, amount));
     };
 
     instance.getTechData = function(id) {
@@ -208,23 +303,13 @@ Game.tech = (function(){
 
     instance.applyTechEffect = function(id) {
         var data = this.entries[id];
-        if(typeof data.apply !== 'undefined') {
-            data.apply(data);
-        }
-    };
-
-    instance.hasResources = function (resources) {
-        for (var resource in resources) {
-           if (window[resource] < resources[resource]) {
-               return false;
-           }
-        }
-        return true;
-    };
-
-    instance.spendResources = function(resources) {
-        for (var resource in resources) {
-            window[resource] -= resources[resource];
+        if('onApply' in data) {
+            data.onApply(data);
+        };
+        if('tabAlerts' in data){
+            for(var a in data.tabAlerts){
+                newUnlock(data.tabAlerts[a]);
+            }
         }
     };
 
@@ -247,6 +332,7 @@ Game.tech = (function(){
     instance.isMaxLevel = function(id) {
         var tech = this.getTechData(id);
         if (typeof tech !== 'undefined') {
+            if(id == 'energyEfficiencyResearch') return false;
             return tech.maxLevel > 0 && tech.current >= tech.maxLevel;
         }
         return false;

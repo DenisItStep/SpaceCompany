@@ -1,6 +1,7 @@
 STATISTIC_TYPE = {
     NUMBER: 1,
-    TIME: 2
+    TIME: 2,
+    DATE: 3,
 };
 
 Game.statistics = (function(){
@@ -11,22 +12,26 @@ Game.statistics = (function(){
     instance.entries = {};
     instance.statisticTypeCount = 0;
 
+    instance.lastRebirthTime = new Date().getTime();
+
     instance.initialise = function() {
         this.createStatistic("manualResources", Game.constants.statisticCategoryGeneral, "Resources Mined By Hand");
 
         for(var i = 1; i <= Game.constants.maxTier; i++) {
             this.createStatistic("tierOwned" + i, Game.constants.statisticCategoryGeneral, "Tier " + i + " Machines Owned");
         }
+        this.createStatistic("rebirthCount", Game.constants.statisticCategoryGeneral, "Rebirth Count", 0, STATISTIC_TYPE.NUMBER);
 
         this.createStatistic("tabsUnlocked", Game.constants.statisticCategoryUnlockable, "Tabs Unlocked", 7);
-        this.createStatistic("resourcesUnlocked", Game.constants.statisticCategoryUnlockable, "Resources Unlocked", 16);
-        this.createStatistic("techResearched", Game.constants.statisticCategoryUnlockable, "Technologies Researched", 26);
-        this.createStatistic("placesExplored", Game.constants.statisticCategoryUnlockable, "Places Explored", 10);
+        this.createStatistic("resourcesUnlocked", Game.constants.statisticCategoryUnlockable, "Resources Unlocked", Object.keys(Game.resources.entries).length);
+        this.createStatistic("techResearched", Game.constants.statisticCategoryUnlockable, "Technologies Researched", Object.keys(Game.tech.entries).length);
+        this.createStatistic("placesExplored", Game.constants.statisticCategoryUnlockable, "Places Explored", Object.keys(Game.solar.entries).length);
         this.createStatistic("wondersBuilt", Game.constants.statisticCategoryUnlockable, "Wonders Built", 4);
         this.createStatistic("wondersActivated", Game.constants.statisticCategoryUnlockable, "Wonders Activated", 9);
 
         this.createStatistic("sessionTime", Game.constants.statisticCategoryTiming, "Session time", 0, STATISTIC_TYPE.TIME);
-        this.createStatistic("timePlayed", Game.constants.statisticCategoryTiming, "Time Played", 0, STATISTIC_TYPE.TIME);
+        this.createStatistic("timePlayed", Game.constants.statisticCategoryTiming, "Time Played Actively", 0, STATISTIC_TYPE.TIME);
+        this.createStatistic("lastRebirth", Game.constants.statisticCategoryTiming, "Time Since Last Rebirth", 0, STATISTIC_TYPE.TIME);
 
         // Set some defaults
         this.add('resourcesUnlocked', 3);
@@ -40,10 +45,19 @@ Game.statistics = (function(){
 
     instance.updateUnlockedTabs = function() {
         // start at 1 for the resources tab
-        var tabCount = 1 + tabsUnlocked.length;
-        tabCount += $.inArray("solCenterTopTab", resourcesUnlocked) >= 0 ? 1 : 0;
-
-        this.setValue('tabsUnlocked', tabCount);
+        var tabCount = 1;
+        tabCount += Game.tech.tabUnlocked;
+        tabCount += Game.solar.tabUnlocked;
+        tabCount += Game.wonder.tabUnlocked;
+        tabCount += Game.solCenter.tabUnlocked;
+        tabCount += Game.interstellar.tabUnlocked;
+        tabCount += Game.stargaze.tabUnlocked;
+        tabCount += Game.enlightenment.tabUnlocked;
+        if(Game.enlightenment.upgradeEntries.machines.achieved){
+            tabCount += 1;
+        }
+        
+        this.setValue('tabsUnlocked', tabCount, tabCount);
     };
 
     instance.setValue = function(id, value, valueAlltime) {
@@ -94,6 +108,7 @@ Game.statistics = (function(){
                 data.statistics.entries[id] = {v: this.entries[id].value, va: this.entries[id].valueAlltime};
             }
         }
+        data.statistics.lastRebirthTime = this.lastRebirthTime;
     };
 
     instance.load = function(data) {
@@ -108,6 +123,8 @@ Game.statistics = (function(){
                 }
             }
         }
+
+        if(data.statistics.lastRebirthTime) this.lastRebirthTime = data.statistics.lastRebirthTime;
 
         // Reset some statistics that we don't care about being persistent, might have to add a flag for em later
         this.setValue('sessionTime', 0, 0);
