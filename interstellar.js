@@ -479,12 +479,12 @@ Game.interstellar.military = (function(){
         var roll = Math.random();
         if(chance >= roll){
             star.spy += 1;
-            Game.notifyInfo("Successful Espionage!", "You have found out more about the star system!");
+            Game.notifyInfo("Шпионаж завершен!", "Вы узнали больше о звездной системе!");
         } else {
             var scout = this.entries.scout;
             scout.count -= scout.active;
             scout.active = 0;
-            Game.notifyInfo("Espionage Failed!", "You lost all of your active scouts.");
+            Game.notifyInfo("Шпионаж не удался!", "Вы потеряли всех своих активных разведчиков.");
         }
         star.displayNeedsUpdate = true;
         this.updateFleetStats();
@@ -549,9 +549,9 @@ Game.interstellar.military = (function(){
                         }
                         shipData.displayNeedsUpdate = true;
                     }
-                    Game.notifyInfo("Successful Invasion!", "You have conquered " + star.name + " and now gain production boosts from it in " + star.resource1 + " and " + star.resource2 + ". Despite your victory, you may have lost some ships in battle.");
+                    Game.notifyInfo("Удачного вторжения!", "Вы победили " + star.name + " и теперь получить увеличение производства от него в " + star.resource1 + " и " + star.resource2 + ". Несмотря на вашу победу, вы, возможно, потеряли несколько кораблей в бою.");
                 } else {
-                    Game.notifyInfo("Successful Invasion!", "You have conquered " + star.name + " without any losses and now gain production boosts from it in " + star.resource1 + " and " + star.resource2 + "!");                    
+                    Game.notifyInfo("Удачное вторжение!", "Вы победили " + star.name + " без каких-либо потерь, а теперь получить увеличение производства от него в " + star.resource1 + " и " + star.resource2 + "!");                    
                 }
                 var faction = Game.stargaze.getStargazeData(star.factionId);
                 faction.opinion -= 10;
@@ -569,7 +569,7 @@ Game.interstellar.military = (function(){
                     }
                     shipData.displayNeedsUpdate = true;
                 }
-                Game.notifyInfo("Failed Invasion!", "Unfortunately, the enemy forces were too strong for you. They have destroyed all of your active ships.");
+                Game.notifyInfo("Неудачное вторжение!", "К сожалению, силы противника были слишком сильны для вас. Они уничтожили все ваши активные корабли.");
             }
             star.displayNeedsUpdate = true;
             this.updateFleetStats();
@@ -585,7 +585,7 @@ Game.interstellar.military = (function(){
             data.owned = true;
             data.displayNeedsUpdate = true;
             faction.displayNeedsUpdate = true;
-            Game.notifyInfo("Successful Absorbtion!", "You have conquered " + data.name + " peacefully and now gain production boosts from it in " + data.resource1 + " and " + data.resource2 + ". Congratulations!");
+            Game.notifyInfo("Успешное поглощение!", "Вы победили " + data.name + " мирно и теперь получить увеличение производства от него в " + data.resource1 + " и " + data.resource2 + ". Поздравляю!");
         }
     };
 
