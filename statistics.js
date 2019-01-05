@@ -15,23 +15,23 @@ Game.statistics = (function(){
     instance.lastRebirthTime = new Date().getTime();
 
     instance.initialise = function() {
-        this.createStatistic("manualResources", Game.constants.statisticCategoryGeneral, "Resources Mined By Hand");
+        this.createStatistic("manualResources", Game.constants.statisticCategoryGeneral, "Ресурсы добытые вручную");
 
         for(var i = 1; i <= Game.constants.maxTier; i++) {
-            this.createStatistic("tierOwned" + i, Game.constants.statisticCategoryGeneral, "Tier " + i + " Machines Owned");
+            this.createStatistic("tierOwned" + i, Game.constants.statisticCategoryGeneral, "Ряд " + i + " принадлежит машинам");
         }
-        this.createStatistic("rebirthCount", Game.constants.statisticCategoryGeneral, "Rebirth Count", 0, STATISTIC_TYPE.NUMBER);
+        this.createStatistic("rebirthCount", Game.constants.statisticCategoryGeneral, "Количество перерождений", 0, STATISTIC_TYPE.NUMBER);
 
-        this.createStatistic("tabsUnlocked", Game.constants.statisticCategoryUnlockable, "Tabs Unlocked", 7);
-        this.createStatistic("resourcesUnlocked", Game.constants.statisticCategoryUnlockable, "Resources Unlocked", Object.keys(Game.resources.entries).length);
-        this.createStatistic("techResearched", Game.constants.statisticCategoryUnlockable, "Technologies Researched", Object.keys(Game.tech.entries).length);
-        this.createStatistic("placesExplored", Game.constants.statisticCategoryUnlockable, "Places Explored", Object.keys(Game.solar.entries).length);
-        this.createStatistic("wondersBuilt", Game.constants.statisticCategoryUnlockable, "Wonders Built", 4);
-        this.createStatistic("wondersActivated", Game.constants.statisticCategoryUnlockable, "Wonders Activated", 9);
+        this.createStatistic("tabsUnlocked", Game.constants.statisticCategoryUnlockable, "Разблокированно вкладок", 7);
+        this.createStatistic("resourcesUnlocked", Game.constants.statisticCategoryUnlockable, "Разблокированно ресурсов", Object.keys(Game.resources.entries).length);
+        this.createStatistic("techResearched", Game.constants.statisticCategoryUnlockable, "Исследованно технологий", Object.keys(Game.tech.entries).length);
+        this.createStatistic("placesExplored", Game.constants.statisticCategoryUnlockable, "Иследованно мест", Object.keys(Game.solar.entries).length);
+        this.createStatistic("wondersBuilt", Game.constants.statisticCategoryUnlockable, "Построенно Чудес", 4);
+        this.createStatistic("wondersActivated", Game.constants.statisticCategoryUnlockable, "Активировано чудес", 9);
 
-        this.createStatistic("sessionTime", Game.constants.statisticCategoryTiming, "Session time", 0, STATISTIC_TYPE.TIME);
-        this.createStatistic("timePlayed", Game.constants.statisticCategoryTiming, "Time Played Actively", 0, STATISTIC_TYPE.TIME);
-        this.createStatistic("lastRebirth", Game.constants.statisticCategoryTiming, "Time Since Last Rebirth", 0, STATISTIC_TYPE.TIME);
+        this.createStatistic("sessionTime", Game.constants.statisticCategoryTiming, "Время сеанса", 0, STATISTIC_TYPE.TIME);
+        this.createStatistic("timePlayed", Game.constants.statisticCategoryTiming, "Время активного игрока", 0, STATISTIC_TYPE.TIME);
+        this.createStatistic("lastRebirth", Game.constants.statisticCategoryTiming, "Время с последнего возрождения", 0, STATISTIC_TYPE.TIME);
 
         // Set some defaults
         this.add('resourcesUnlocked', 3);
