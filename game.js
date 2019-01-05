@@ -173,7 +173,7 @@ var Game = (function() {
         this.updates.save(data);
 
         localStorage.setItem("save",JSON.stringify(data));
-        Game.notifyInfo('Game Saved', 'Your save data has been stored in localStorage on your computer');
+        Game.notifyInfo('Игра сохранена', 'Ваши сохраненные данные были сохранены в localStorage на вашем компьютере');
         console.log('Game Saved');
 
         return data;
@@ -326,16 +326,16 @@ var Game = (function() {
     };
 
     instance.deleteSave = function() {
-        var deleteSave = prompt("Are you sure you want to delete this save? It is irreversible! If so, type 'DELETE' into the box.");
+        var deleteSave = prompt("Вы уверены, что хотите удалить это сохранение? Это необратимо! Если это так, введите «DELETE» в поле.");
 
         if(deleteSave === "DELETE") {
             localStorage.removeItem("save");
 
-            alert("Deleted Save");
+            alert("Сохранение Удалено");
             window.location.reload();
         }
         else {
-            alert("Deletion Cancelled");
+            alert("Удаление отменено");
         }
     };
 
@@ -343,7 +343,7 @@ var Game = (function() {
         document.getElementById("loadScreen").className = "hidden";
         document.getElementById("game").className = "container";
 
-        self.deleteInterval("Loading");
+        self.deleteInterval("Загрузка");
 
         // Initialise data first
         self.achievements.initialise();
@@ -360,20 +360,20 @@ var Game = (function() {
         // Create the collector Object; page -> categories -> items
         self.combineAllGameObjects()
         // Initialise UI
-        self.resourcesUI = new Templates.createPage('resources', 'Resources', Game.pages.resources);
+        self.resourcesUI = new Templates.createPage('resources', 'Ресурсы', Game.pages.resources);
         self.resourcesUI.initialise();
-        self.techUI = new Templates.techUI('tech', 'Research', Game.pages.tech);
+        self.techUI = new Templates.techUI('tech', 'Исследоваине', Game.pages.tech);
         self.techUI.initialise();
-        self.solarUI = new Templates.solarUI('solar', 'Solar System', Game.pages.solar);
+        self.solarUI = new Templates.solarUI('solar', 'Солнечная система', Game.pages.solar);
         self.solarUI.initialise();
-        self.wonderUI = new Templates.wonderUI('wonder', 'Wonders', Game.pages.wonder);
+        self.wonderUI = new Templates.wonderUI('wonder', 'Чудеса', Game.pages.wonder);
         self.wonderUI.initialise();
-        self.solCenterUI = new Templates.solCenterUI('solCenter', 'Sol Center', Game.pages.solCenter);
+        self.solCenterUI = new Templates.solCenterUI('solCenter', 'Сол Центр', Game.pages.solCenter);
         self.solCenterUI.initialise();
         self.interstellarUI.initialise();
         self.stargazeUI.initialise();
         self.enlightenmentUI.initialise();
-        self.machinesUI = new Templates.machinesUI('machines', 'Machines', Game.pages.machines);
+        self.machinesUI = new Templates.machinesUI('machines', 'Машины', Game.pages.machines);
         self.machinesUI.initialise();
         // All pages are created, now do the bindings
         Templates.uiFunctions.linkEvents();
@@ -394,9 +394,9 @@ var Game = (function() {
         self.addCredits(self.donatorData);
 
         // Then start the main loops
-        self.createInterval("Fast Update", self.fastUpdate, 100);
-        self.createInterval("Slow Update", self.slowUpdate, 1000);
-        self.createInterval("UI Update", self.uiUpdate, 100);
+        self.createInterval("Быстрое обновление", self.fastUpdate, 100);
+        self.createInterval("Медленное обновление", self.slowUpdate, 1000);
+        self.createInterval("UI обновление", self.uiUpdate, 100);
 
         // Do this in a setInterval so it gets called even when the window is inactive
         window.setInterval(function(){ Game.fixedUpdate(); },100);
@@ -469,8 +469,8 @@ var Game = (function() {
     instance.notifyStorage = function() {
         if(Game.settings.entries.notificationsEnabled === true){
             this.activeNotifications.storage = new PNotify({
-                title: "Storage Full!",
-                text: 'You will no longer collect resources when they are full.',
+                title: "Склады Заполнены!",
+                text: 'Вы больше не будете собирать ресурсы, когда они заполнены.',
                 type: 'warning',
                 animation: 'fade',
                 animate_speed: 'fast',
@@ -487,8 +487,8 @@ var Game = (function() {
 
     instance.notifyOffline = function(time) {
         this.activeNotifications.success = new PNotify({
-            title: "Offline Gains",
-            text: "You've been offline for " + Game.utils.getFullTimeDisplay(time, true),
+            title: "Оффлайн прибыль",
+            text: "Вы были оффлайн " + Game.utils.getFullTimeDisplay(time, true),
             type: 'info',
             animation: 'fade',
             animate_speed: 'fast',
@@ -522,10 +522,10 @@ var Game = (function() {
         if (timeLeft <= 15000) {
             element.show();
             if(timeLeft <= 5000){
-                element.text("Autosaving in " + (timeLeft / 1000).toFixed(1) + " seconds");
+                element.text("Автосохраннеие через " + (timeLeft / 1000).toFixed(1) + " секунд");
             }
             else{
-                element.text("Autosaving in " + (timeLeft / 1000).toFixed(0) + " seconds");
+                element.text("Автосохранение через " + (timeLeft / 1000).toFixed(0) + " секунд");
             }
         } else {
             element.hide();
@@ -543,7 +543,7 @@ var Game = (function() {
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        console.debug("Loading Game");
+        console.debug("Загрузка игры");
         this.loadAnimation(Game, 100);
         this.createInterval("Loading", this.loadDelay, 1000);
 
