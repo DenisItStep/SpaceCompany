@@ -131,8 +131,8 @@ Game.buildings = (function(){
             var data = Game.otherBuildingsData[id];
         }
 
-        console.debug("Loaded " + this.buildingTypeCount + " Building Types");
-        console.debug("Loaded " + this.storageTypeCount + " Storage Types");
+        console.debug("Loaded " + this.buildingTypeCount + " Типы зданий");
+        console.debug("Loaded " + this.storageTypeCount + " Типы хранения");
     };
 
     instance.update = function(delta) {};
@@ -181,7 +181,7 @@ Game.buildings = (function(){
                     }
                 }
             }
-            console.error("We don't need any .unlock(), as everything is unlocked by a tech or wonder")
+            console.error("Нам не нужен какой-либо .unlock(), так-как все разблокировано техникой или чудом.")
         }
         // Update the cost of buildings
         Object.keys(Game.buildings.entries).forEach(function(building) {
@@ -319,7 +319,7 @@ Game.buildings = (function(){
             else var segmentX = {n: Game.utils.capitaliseFirst(resource), p: Game.settings.format(this.calcCost(data, resource, "buildingData"))};
             segmentsCost.push(segmentX);
         }
-        var costHtml = "<span>Costs </span>";
+        var costHtml = "<span>Расходы </span>";
         for(var i = 0; i < segmentsCost.length; i++){
             var segmentData = segmentsCost[i];
             var html = '<span>' + segmentData.p + " " + segmentData.n + '</span>';
