@@ -108,7 +108,7 @@ Game.solar = (function(){
 				Templates.uiFunctions.unlock("buildMeteorite");
 				newUnlock("wonder");
 			}
-			Game.notifySuccess("New Tab!", "You've unlocked the Wonders Tab!");
+			Game.notifySuccess("Новая вкладка!", "Вы открыли вкладку 'Чудеса'!");
 		}
 		if(id == "solCenter"){
 			Game.solCenter.tabUnlocked = true;
@@ -119,7 +119,7 @@ Game.solar = (function(){
 				Templates.uiFunctions.unlock("nanoswarmTech");
 			}
 			newUnlock("solCenter");
-			Game.notifySuccess("New Tab!", "You've unlocked the Sol Center Tab!");
+			Game.notifySuccess("Новая вкладка!", "Вы открыли вкладку Сол Центр!");
 		}
 		Templates.uiFunctions.hide(data.id);
 		Game.statistics.add('placesExplored');
