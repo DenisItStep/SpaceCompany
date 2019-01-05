@@ -35,7 +35,7 @@ Game.achievements = (function() {
 			this.achievementCountIncludingTiers += this.entries[id].brackets.length;
 		}
 		
-		console.debug("Loaded " + this.achievementCount + " (" + this.achievementCountIncludingTiers +") Achievements");
+		console.debug("Загружено " + this.achievementCount + " (" + this.achievementCountIncludingTiers +") Достижений");
 	};
 
 	instance.getAchievementTitle = function(data, for_tooltip) {
@@ -46,7 +46,7 @@ Game.achievements = (function() {
 			else
 				var title = data.title.replace('%s', Game.settings.format(brackets[data.unlocked]));
 			if(for_tooltip === true) {
-				title += " (Completed)";
+				title += " (Завершено)";
 			}
 			return title;
 		} else {
@@ -108,7 +108,7 @@ Game.achievements = (function() {
 		if (data.achievements && data.achievements.version) {
 			switch (data.achievements.version) {
 				case 6: this.loadV6(data); break;
-				default: console.debug("Could not load saved achievement data from version " + data.achievements.version); break;
+				default: console.debug("Не удалось загрузить сохраненные данные достижений из версии " + data.achievements.version); break;
 			}
 		}
 	};
