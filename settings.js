@@ -239,7 +239,7 @@ Game.settings = (function(){
                         var capacity = '';
                         Object.keys(storage).forEach (function(c) {
                         capacity += "<dd>&#8227; "+Game.resources.entries[c].name+":&nbsp;&nbsp;"+Game.settings.format(storage[c], 0).toString()+"</dd>";
-                        capacity = '<dl><dt>Storage:</dt>'+capacity;
+                        capacity = '<dl><dt>Хранилище:</dt>'+capacity;
                         result += capacity;
                     });
 
