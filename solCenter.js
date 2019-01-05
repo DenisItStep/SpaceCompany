@@ -276,7 +276,7 @@ Game.solCenter = (function(){
     		Game.resources.takeResource(RESOURCE.Energy, required);
     		Game.resources.addResource(resource, amount);
     		if(notification != false){
-    			Game.notifyInfo('Energy Conversion', 'Gained ' + Game.settings.format(amount) + ' ' + Game.utils.capitaliseFirst(resource));
+    			Game.notifyInfo('Преобразование энергии', 'Получено ' + Game.settings.format(amount) + ' ' + Game.utils.capitaliseFirst(resource));
     		}
     	}
     };
