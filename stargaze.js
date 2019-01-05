@@ -52,10 +52,10 @@ Game.stargaze = (function(){
 
 	instance.rebirth = function(){
 		if(Game.solCenter.entries.dyson.items.sphere.current < 1)return;
-		var check = confirm("Are you sure? This is non-reversible after you reset and save.");
+		var check = confirm("Вы уверены? Это необратимо после сброса и сохранения.");
 		if(check){
 			this.entries.darkMatter.current += this.entries.darkMatter.potential;
-			Game.notifySuccess("Dark Matter!", "You have gained " + this.entries.darkMatter.potential + " Dark Matter from rebirthing into your new life!");
+			Game.notifySuccess("Темная материя!", "Вы получили " + this.entries.darkMatter.potential + " Темной Материи от перерождения в новую жизнь!");
 			Game.statistics.add("rebirthCount", 1);
 			Game.statistics.setValue("lastRebirth", new Date());
 
@@ -93,7 +93,7 @@ Game.stargaze = (function(){
 			for(var i = 0; i < objects.length; i++){
 				var object = Game.interstellar[objects[i]];
 				for(var entry in object.entries){
-					$('#' + object.entries[entry].htmlId + 'Count').text(object.entries[entry].count);
+					$('#' + object.entries[entry].htmlId + 'Подсчитать').text(object.entries[entry].count);
 				}
 			}
 			for(var star in Game.interstellar.stars.entries){
@@ -224,7 +224,7 @@ Game.stargaze = (function(){
 		if(this.respecCount <= 0){
 			return;
 		}
-		if(confirm('Warning! You will still lose the respec if you have no upgrades.') == false){
+		if(confirm('Предупреждение! Вы все равно потеряете ответ, если у вас нет обновлений..') == false){
 			return;
 		}
 		this.respecCount -= 1;
