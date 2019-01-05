@@ -11,27 +11,27 @@ Game.interstellar.stars = (function(){
 
     var buildings = {
         0: {
-            name: "Repair War Damages",
+            name: "Ремонт военных повреждений",
             icon: "repair",
             happiness: 15,
         },
         1: {
-            name: "Remove Military Presence",
+            name: "Удалить военное присутствие",
             icon: "military",
             happiness: 20,
         },
         2: {
-            name: "Introduce Overlord Religion",
+            name: "Ввести религию поклонения",
             icon: "religion",
             happiness: 20,
         },
         3: {
-            name: "Indoctrinate the Youth",
+            name: "Воспитывать молодежь",
             icon: "indoctrinate",
             happiness: 20,
         },
         4: {
-            name: "Build Overlord Monument",
+            name: "Построить Памятник Повелителю",
             icon: "monument",
             happiness: 10,
         },
