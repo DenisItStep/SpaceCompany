@@ -3,7 +3,7 @@ Game.achievementsCategoryData = (function () {
 	var instance = {};
 
 	instance.resources = {
-		title: 'Resources',
+		title: 'Ресурсы',
 		brackets: Game.constants.achievementResourceBrackets,
 		entries: [
 		'resUranium', 'resLava',
@@ -14,7 +14,7 @@ Game.achievementsCategoryData = (function () {
 	};
 
 	instance.producers = {
-		title: 'Producers',
+		title: 'Производство',
 		brackets: Game.constants.achievementProducerBrackets,
 		entries: [
 		'prodPlasmaT1', 'prodPlasmaT2',
@@ -46,7 +46,7 @@ Game.achievementsCategoryData = (function () {
 	};
 
 	instance.other = {
-		title: 'Miscellaneous',
+		title: 'Разнообразное',
 	}
 
 	return instance;
@@ -65,7 +65,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_0',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'uraniumIcon',
-		title: 'Collect %s Uranium',
+		title: 'Собрать %s Урана',
 		evaluator: function(x) { return getResource(RESOURCE.Uranium) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Uranium) / x }
 	};
@@ -74,7 +74,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_1',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'lavaIcon',
-		title: 'Collect %s Lava',
+		title: 'Собрать %s Лавы',
 		evaluator: function(x) { return getResource(RESOURCE.Lava) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Lava) / x }
 	};
@@ -83,7 +83,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_2',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'oilIcon',
-		title: 'Collect %s Oil',
+		title: 'Собрать %s Нефти',
 		evaluator: function(x) { return getResource(RESOURCE.Oil) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Oil) / x }
 	};
@@ -92,7 +92,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_3',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'metalIcon',
-		title: 'Collect %s Metal',
+		title: 'Собрать %s Металла',
 		evaluator: function(x) { return getResource(RESOURCE.Metal) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Metal) / x }
 	};
@@ -101,7 +101,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_4',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'gemIcon',
-		title: 'Collect %s Gems',
+		title: 'Собрать %s Алмазов',
 		evaluator: function(x) { return getResource(RESOURCE.Gem) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Gem) / x }
 	};
@@ -110,7 +110,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_5',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'carbonIcon',
-		title: 'Collect %s Carbon',
+		title: 'Собрать %s Углерода',
 		evaluator: function(x) { return getResource(RESOURCE.Carbon) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Carbon) / x }
 	};
@@ -119,7 +119,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_6',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'woodIcon',
-		title: 'Collect %s Wood',
+		title: 'Собрать %s Дерева',
 		evaluator: function(x) { return getResource(RESOURCE.Wood) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Wood) / x }
 	};
@@ -127,7 +127,7 @@ Game.achievementsData = (function(){
 	instance.resSilicon = {
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'siliconIcon',
-		title: 'Collect %s Silicon',
+		title: 'Собрать %s Кремния',
 		evaluator: function(x) { return getResource(RESOURCE.Silicon) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Silicon) / x }
 	};
@@ -136,7 +136,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_7',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'lunariteIcon',
-		title: 'Collect %s Lunarite',
+		title: 'Собрать %s Лунарина',
 		evaluator: function(x) { return getResource(RESOURCE.Lunarite) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Lunarite) / x }
 	};
@@ -145,7 +145,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_8',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'methaneIcon',
-		title: 'Collect %s Methane',
+		title: 'Собрать %s Метана',
 		evaluator: function(x) { return getResource(RESOURCE.Methane) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Methane) / x }
 	};
@@ -154,7 +154,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_9',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'titaniumIcon',
-		title: 'Collect %s Titanium',
+		title: 'Собрать %s Титана',
 		evaluator: function(x) { return getResource(RESOURCE.Titanium) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Titanium) / x }
 	};
@@ -163,7 +163,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_10',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'goldIcon',
-		title: 'Collect %s Gold',
+		title: 'Собрать %s Золота',
 		evaluator: function(x) { return getResource(RESOURCE.Gold) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Gold) / x }
 	};
@@ -172,7 +172,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_11',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'silverIcon',
-		title: 'Collect %s Silver',
+		title: 'Собрать %s Серебра',
 		evaluator: function(x) { return getResource(RESOURCE.Silver) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Silver) / x }
 	};
@@ -181,7 +181,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_12',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'hydrogenIcon',
-		title: 'Collect %s Hydrogen',
+		title: 'Собрать %s Водорода',
 		evaluator: function(x) { return getResource(RESOURCE.Hydrogen) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Hydrogen) / x }
 	};
@@ -190,7 +190,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_13',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'heliumIcon',
-		title: 'Collect %s Helium',
+		title: 'Собрать %s Гелия',
 		evaluator: function(x) { return getResource(RESOURCE.Helium) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Helium) / x }
 	};
@@ -199,7 +199,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_14',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'iceIcon',
-		title: 'Collect %s Ice',
+		title: 'Собрать %s Льда',
 		evaluator: function(x) { return getResource(RESOURCE.Ice) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Ice) / x }
 	};
@@ -208,7 +208,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_15',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'meteoriteIcon',
-		title: 'Collect %s Meteorite',
+		title: 'Собрать %s Метеоритов',
 		evaluator: function(x) { return getResource(RESOURCE.Meteorite) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Meteorite) / x }
 	};
@@ -217,7 +217,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_16',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'technologiesIcon',
-		title: 'Collect %s Science',
+		title: 'Собрать %s Науки',
 		evaluator: function(x) { return getResource(RESOURCE.Science) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.Science) / x }
 	};
@@ -226,7 +226,7 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_17',
 		categoryInstance: Game.achievementsCategoryData.resources,
 		iconName: 'rocketFuelIcon',
-		title: 'Collect %s Rocket Fuel',
+		title: 'Собрать %s Ракетного топлива',
 		evaluator: function(x) { return getResource(RESOURCE.RocketFuel) >= x },
 		progressEvaluator: function(x) { return getResource(RESOURCE.RocketFuel) / x }
 	};
@@ -1170,8 +1170,8 @@ Game.achievementsData = (function(){
 		id_v4: 'ach_121',
 		categoryInstance: Game.achievementsCategoryData.other,
 		iconName: 'keyboardIcon',
-		title: 'Play for %s',
-		bracketTitles:["1 day", "10 days", "1 month", "3 months", "6 months"],
+		title: 'В игре %s',
+		bracketTitles:["1 день", "10 дней", "1 месяц", "3 месяца", "6 месяцев"],
 		brackets: [86400, 864000, 2.628e+6, 7.884e+6, 1.577e+7],
 		evaluator: function(x) { return Game.statistics.entries.timePlayed.valueAlltime >= x },
 		progressEvaluator: function(x) { return Game.statistics.entries.timePlayed.valueAlltime/x }
