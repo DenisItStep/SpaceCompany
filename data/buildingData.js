@@ -14,8 +14,8 @@ Game.buildingData = (function () {
     // Energy //
     ////////////
     instance.energyT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Carbon Engine',
-        desc: 'Burns Carbon to produce a steady source of Energy.',
+        name: 'Углеродный двигатель',
+        desc: 'Сжигает углерод для производства постоянного источника энергии.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 2,
@@ -28,8 +28,8 @@ Game.buildingData = (function () {
     });
 
     instance.energyT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Solar Panel',
-        desc: 'Gains Energy slowly from the sun without using any resources.',
+        name: 'Солнечная панель',
+        desc: 'Медленно получает энергию от солнца без использования каких-либо ресурсов.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 1.5
@@ -41,8 +41,8 @@ Game.buildingData = (function () {
     });
 
     instance.energyT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Methane Power Station',
-        desc: 'Burn powerful methane from Venus to satisfy all your power needs.',
+        name: 'Метановая электростанция',
+        desc: 'Сожгите мощный метан с Венеры, чтобы удовлетворить все ваши потребности в энергии.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 23,
@@ -55,8 +55,8 @@ Game.buildingData = (function () {
     });
 
     instance.energyT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Nuclear Power Station',
-        desc: 'Uses fission to create large amounts of power.',
+        name: 'Атомная электростанция',
+        desc: 'Использует деление для создания большого количества энергии.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 153,
@@ -69,8 +69,8 @@ Game.buildingData = (function () {
     });
 
     instance.energyT5 = $.extend({}, baseProducerBuilding, {
-        name: 'Magmatic Dynamo',
-        desc: 'The Magmatic Dynamo is a method of producing power by using lava as a fuel. Because of the extreme temperature of lava, a lot of Energy can be produced at once.',
+        name: 'Магматическое динамо',
+        desc: 'Магматическое Динамо - это метод производства энергии с использованием лавы в качестве топлива. Из-за экстремальной температуры лавы, может быть произведено одновременно много энергии.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 191,
@@ -84,8 +84,8 @@ Game.buildingData = (function () {
     });
 
     instance.energyT6 = $.extend({}, baseProducerBuilding, {
-        name: 'Fusion Reactor',
-        desc: 'In a fusion reaction, Energy is released when two light atomic nuclei are fused together to form one heavier atom. This is the same reaction that occurs in stars and produces a lot of power.',
+        name: 'Реактор Плавления',
+        desc: 'В реакции синтеза энергия выделяется, когда два легких атомных ядра сливаются вместе, образуя один более тяжелый атом. Это та же самая реакция, которая происходит в звездах и производит много энергии.',
         resource: 'energy',
         resourcePerSecond: {
             'energy': 273,
@@ -103,8 +103,8 @@ Game.buildingData = (function () {
     // Plasma //
     ////////////
     instance.plasmaT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Super-Heater',
-        desc: 'The Super-Heater throws electricity at Hydrogen to turn it into a plasmatic substance.',
+        name: 'Супер-подогреватель',
+        desc: 'Супер-нагреватель выбрасывает электричество в водород, превращая его в плазматическое вещество.',
         resource: 'plasma',
         resourcePerSecond: {
             'energy': -1000,
@@ -119,8 +119,8 @@ Game.buildingData = (function () {
     });
 
     instance.plasmaT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Plasmatic Pit',
-        desc: 'This contraption converts Helium into Plasma by firing intensive energy bolts at the gas cloud.',
+        name: 'Плазменная яма',
+        desc: 'Эта штуковина превращает гелий в плазму, стреляя мощными энергетическими зарядами в газовое облако.',
         resource: 'plasma',
         resourcePerSecond: {
             'energy': -8500,
@@ -135,8 +135,8 @@ Game.buildingData = (function () {
     });
 
     instance.plasmaT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Electron Bath',
-        desc: 'Bathing in Electrons. What could go wrong?',
+        name: 'Электронная баня',
+        desc: 'Купание в электронах. Что может пойти не так?',
         resource: 'plasma',
         resourcePerSecond: {
             'energy': -71000,
@@ -152,8 +152,8 @@ Game.buildingData = (function () {
     });
 
     instance.plasmaT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Q.R.S',
-        desc: 'The Quasar Redirection System is a colossal space station built from graphene, used to redirect quasar activity towards gas giants, to instantaneously convert the gases into plasma for collection.',
+        name: 'С.П.К',
+        desc: 'Система Перенаправления Квазара - это колоссальная космическая станция, построенная из графена, которая используется для перенаправления активности квазара на газовых гигантов, чтобы мгновенно преобразовывать газы в плазму для сбора.',
         resource: 'plasma',
         resourcePerSecond: {
             'energy': -600000,
@@ -172,8 +172,8 @@ Game.buildingData = (function () {
     // Uranium //
     /////////////
     instance.uraniumT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Grinder',
-        desc: 'Pulverizes Uranium for easy transportation out of deep mineshafts.',
+        name: 'Шлифовщик',
+        desc: 'Измельчает уран для легкой транспортировки из глубоких шахтных стволов.',
         resource: 'uranium',
         resourcePerSecond: {
             'uranium': 1
@@ -186,8 +186,8 @@ Game.buildingData = (function () {
     });
 
     instance.uraniumT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Cubic Teleposer',
-        desc: 'This teleposes blocks of rock from far underground to the surface so that Uranium can be mined more easily.',
+        name: 'Кубический Телепорт',
+        desc: 'Это позволяет телепортировать блоки породы из далекого подполья на поверхность, чтобы легче было добывать уран.',
         resource: 'uranium',
         resourcePerSecond: {
             'energy': -40,
@@ -201,8 +201,8 @@ Game.buildingData = (function () {
     });
 
     instance.uraniumT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Uranium Enricher',
-        desc: 'The Enricher increases the quality of uranium mined and thus allows more of the uranium in rocks to be used in your company.',
+        name: 'Обогатитель урана',
+        desc: 'Обогатитель повышает качество добываемого урана и, таким образом, позволяет использовать больше урана в горных породах в вашей компании.',
         resource: 'uranium',
         resourcePerSecond: {
             'energy': -180,
@@ -216,8 +216,8 @@ Game.buildingData = (function () {
     });
 
     instance.uraniumT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Yellowcake Recycler',
-        desc: 'Recycles used-up Uranium to provide the resources with a second use. This greatly increases the amount of Uranium you can use per second.',
+        name: 'Yellowcake переработчик',
+        desc: 'Перерабатывает израсходованный уран для повторного использования ресурсов. Это значительно увеличивает количество урана, которое вы можете использовать в секунду.',
         resource: 'uranium',
         resourcePerSecond: {
             'energy': -436,
@@ -231,8 +231,8 @@ Game.buildingData = (function () {
     });
 
     instance.uraniumT5 = $.extend({}, baseProducerBuilding, {
-        name: 'Planetary Nuclear Plant',
-        desc: 'This huge factory is as large as a planet, fusing together Uranium from common elements.',
+        name: 'Планетарная ядерная установка',
+        desc: 'Эта огромная фабрика размером с планету и объединяет уран из общих элементов.',
         resource: 'uranium',
         resourcePerSecond: {
             'energy': -2719,
@@ -249,8 +249,8 @@ Game.buildingData = (function () {
     // Lava //
     //////////
     instance.lavaT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Heat Resistant Crucible',
-        desc: 'You can use a modified crucible to pick up lava and to store it for later use.',
+        name: 'Жаропрочный тигель',
+        desc: 'Вы можете использовать модифицированный тигель, чтобы собирать лаву и хранить ее для дальнейшего использования.',
         resource: 'lava',
         resourcePerSecond: {
             'lava': 1
@@ -262,8 +262,8 @@ Game.buildingData = (function () {
     });
 
     instance.lavaT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Lava Extractor',
-        desc: 'This extracts lava from volcanoes automatically and quickly.',
+        name: 'Экстрактор лавы',
+        desc: 'Это извлекает лаву из вулканов автоматически и быстро',
         resource: 'lava',
         resourcePerSecond: {
             'energy': -58,
@@ -277,8 +277,8 @@ Game.buildingData = (function () {
     });
 
     instance.lavaT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Igneous Extruder',
-        desc: 'Instead of going out and finding lava, it can be more convenient to make it yourself with heat and pressure.',
+        name: 'Магматический Экструдер',
+        desc: 'Вместо того, чтобы выходить на улицу и искать лаву, может быть удобнее сделать ее самостоятельно с жаром и давлением.',
         resource: 'lava',
         resourcePerSecond: {
             'energy': -237,
@@ -292,8 +292,8 @@ Game.buildingData = (function () {
     });
 
     instance.lavaT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Volcanic Veluptuator',
-        desc: 'A melting pot of misery, pouring lava out from mined rock.',
+        name: 'Вулканический Котел',
+        desc: 'Плавильный котел страданий, выливающий лаву из добытого камня.',
         resource: 'lava',
         resourcePerSecond: {
             'energy': -689,
@@ -307,8 +307,8 @@ Game.buildingData = (function () {
     });
 
     instance.lavaT5 = $.extend({}, baseProducerBuilding, {
-        name: 'Jupitonian Condensator',
-        desc: 'Condenses gases from the heart of Jupiter into liquid magma.',
+        name: 'Юпитоновский конденсатор',
+        desc: 'Конденсирует газы из сердца Юпитера в жидкую магму.',
         resource: 'lava',
         resourcePerSecond: {
             'energy': -4142,
@@ -329,8 +329,8 @@ Game.buildingData = (function () {
     // Oil //
     /////////
     instance.oilT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Small Pump',
-        desc: 'Build a small pump to extract Oil from the ground.',
+        name: 'Маленький насос',
+        desc: 'Постройте небольшой насос для извлечения нефти из земли.',
         resource: 'oil',
         resourcePerSecond: {
             'oil': 1
@@ -342,8 +342,8 @@ Game.buildingData = (function () {
     });
 
     instance.oilT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Pumpjack',
-        desc: 'Pumpjacks are much bigger than small pumps and produce Oil on an industrial scale but they require a lot of Energy.',
+        name: 'Станок-качалка',
+        desc: 'Станок намного больше, чем маленькие насосы и производят нефть в промышленных масштабах, но они требуют много энергии.',
         resource: 'oil',
         resourcePerSecond: {
             'energy': -4,
@@ -357,8 +357,8 @@ Game.buildingData = (function () {
     });
 
     instance.oilT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Oil Field',
-        desc: 'Oil Fields are large open spaces, usually found in deserts where vast oil wells can be found under the ground.',
+        name: 'Нефтяное месторождение',
+        desc: 'Нефтяные месторождения представляют собой большие открытые пространства, обычно находящиеся в пустынях, где под землей можно найти обширные нефтяные скважины.',
         resource: 'oil',
         resourcePerSecond: {
             'energy': -17,
@@ -372,8 +372,8 @@ Game.buildingData = (function () {
     });
 
     instance.oilT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Offshore Rig',
-        desc: 'Offshore Rigs are megastructures floating in the oceans, extracting Oil from under the sea-beds.',
+        name: 'Морская буровая установка',
+        desc: 'Морские буровые установки - это мегаструктуры, плавающие в океанах и добывающие нефть из-под дна моря.',
         resource: 'oil',
         resourcePerSecond: {
             'energy': -44,
@@ -388,7 +388,7 @@ Game.buildingData = (function () {
 
     instance.oilT5 = $.extend({}, baseProducerBuilding, {
         name: 'Fossilator 9000',
-        desc: 'Much better than the 8000 version, this fossilator reverses the fossil fuel cycle. Instead of burning, it creates them from carbon in the air.',
+        desc: 'Гораздо лучше, чем версия 8000, этот ископаемый топлива полностью изменяет цикл ископаемого топлива. Вместо сжигания он создает их из углерода в воздухе.',
         resource: 'oil',
         resourcePerSecond: {
             'energy': -258,
@@ -405,8 +405,8 @@ Game.buildingData = (function () {
     // Metal //
     ///////////
     instance.metalT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Miner',
-        desc: 'Build a pickaxe for your miner.',
+        name: 'Шахтер',
+        desc: 'Построй кирку для своего шахтера.',
         resource: 'metal',
         unlocked: true,
         resourcePerSecond: {
@@ -433,15 +433,15 @@ Game.buildingData = (function () {
                 // Unlock the technology type of research items
                 Game.techCategoryData.research.items.technology.unlocked = true;
                 newUnlock('tech');
-                Game.notifySuccess('New Tab!', 'You\'ve unlocked the Research Tab!');
+                Game.notifySuccess('Новая вкладка!', 'Вы открыли вкладку "Исследования"!');
                 Game.tech.tabUnlocked = true; 
             }
         }
     });
 
     instance.metalT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Heavy Drill',
-        desc: 'Heavy Drills mine Metal at mass.',
+        name: 'Тяжелая дрель',
+        desc: 'Тяжелая дрель много добывает металла из шахт',
         resource: 'metal',
         resourcePerSecond: {
             'energy': -2,
@@ -455,8 +455,8 @@ Game.buildingData = (function () {
     });
 
     instance.metalT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Giga Drill',
-        desc: 'Giga Drills extract Metal at colossal speeds.',
+        name: 'Гига дрель',
+        desc: 'Гига дрель извлекает металл с колоссальной скоростью.',
         resource: 'metal',
         resourcePerSecond: {
             'energy': -9,
@@ -470,8 +470,8 @@ Game.buildingData = (function () {
     });
 
     instance.metalT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Quantum Drill',
-        desc: 'Quantum Drills bend the space-time continuum to get metal faster than physically possible.',
+        name: 'Квантовая дрель',
+        desc: 'Квантовые дрели сгибают пространственно-временной континуум, чтобы получить металл быстрее, чем физически возможно.',
         resource: 'metal',
         resourcePerSecond: {
             'energy': -24,
@@ -485,8 +485,8 @@ Game.buildingData = (function () {
     });
 
     instance.metalT5 = $.extend({}, baseProducerBuilding, {
-        name: 'Multiverse Drill',
-        desc: 'Drills metal from alternate realities where metal is plentiful.',
+        name: 'Мультивселенная дрель',
+        desc: 'Сверлит металл из альтернативных реалий, где металл в изобилии.',
         resource: 'metal',
         resourcePerSecond: {
             'energy': -131,
@@ -503,8 +503,8 @@ Game.buildingData = (function () {
     // Gem //
     /////////
     instance.gemT1 = $.extend({}, baseProducerBuilding, {
-        name: 'Gem Miner',
-        desc: 'Build an improved pickaxe to mine Gems.',
+        name: 'Шахтер алмазов',
+        desc: 'Постройте улучшенную кирку для добычи драгоценных камней.',
         resource: 'gem',
         unlocked: true,
         resourcePerSecond: {
@@ -517,8 +517,8 @@ Game.buildingData = (function () {
     });
 
     instance.gemT2 = $.extend({}, baseProducerBuilding, {
-        name: 'Advanced Drill',
-        desc: 'Advanced Drills mine gem at mass. Because of the toughness of the drill needed it is slower than the heavy drill.',
+        name: 'Продвинутая дрель',
+        desc: 'Из-за необходимой прочности сверла она медленнее тяжелой.',
         resource: 'gem',
         resourcePerSecond: {
             'energy': -2,
@@ -532,8 +532,8 @@ Game.buildingData = (function () {
     });
 
     instance.gemT3 = $.extend({}, baseProducerBuilding, {
-        name: 'Diamond Encrusted Drill',
-        desc: 'The Diamond Encrusted Drill is one of the strongest drills in the solar system, and as such, can collect Gems faster than anything before it.',
+        name: 'Сверло с бриллиантами',
+        desc: 'Бриллиантовая дрель - одно из самых крепких в солнечной системе, и поэтому оно может собирать драгоценные камни быстрее, чем что-либо до этого.',
         resource: 'gem',
         resourcePerSecond: {
             'energy': -15,
@@ -547,8 +547,8 @@ Game.buildingData = (function () {
     });
 
     instance.gemT4 = $.extend({}, baseProducerBuilding, {
-        name: 'Carbyne Drill',
-        desc: 'Carbyne Drills one of the strongest drills in the solar system, and as such, can collect Gems faster than anything before it.',
+        name: 'Карбиновая дрель',
+        desc: 'Карбиновая дрель - одно из самых сильных в солнечной системе, и поэтому может собирать драгоценные камни быстрее, чем кто-либо до него',
         resource: 'gem',
         resourcePerSecond: {
             'energy': -40,
@@ -562,8 +562,8 @@ Game.buildingData = (function () {
     });
 
     instance.gemT5 = $.extend({}, baseProducerBuilding, {
-        name: 'Diamond Accretion Chamber',
-        desc: 'This special container condenses carbon dioxide gas into diamonds, creating gems at a faster rate than any drill.',
+        name: 'Алмазная Аккреционная Палата',
+        desc: 'Этот специальный контейнер конденсирует газообразный диоксид углерода в алмазы, создавая драгоценные камни с большей скоростью, чем любая дрель.',
         resource: 'gem',
         resourcePerSecond: {
             'energy': -260,
