@@ -3,7 +3,7 @@ Game.machinesCategoryData = (function(){
     var instance = {};
 
     instance.resources = {
-        title: 'Resources',
+        title: 'Ресурсы',
         category: 'resources',
         page: 'machines',
         order: 1, // 1st category item of the machines page
@@ -11,7 +11,7 @@ Game.machinesCategoryData = (function(){
     };
 
     instance.other = {
-        title: 'Other',
+        title: 'Другое',
         category: 'other',
         page: 'machines',
         order: 2,
@@ -26,7 +26,7 @@ Game.machinesData = (function(){
 	var instance = {};
 
     instance.energy = {
-        title: 'Energy',
+        title: 'Энергия',
         id: 'energy',
         category: 'resources',
         order: 1, // 1st category item of the machines page
@@ -34,7 +34,7 @@ Game.machinesData = (function(){
     };
 
     instance.fabricated = {
-        title: 'Fabricated',
+        title: 'Произведено',
         id: 'fabricated',
         category: 'resources',
         order: 2,
@@ -42,7 +42,7 @@ Game.machinesData = (function(){
     };
 
     instance.earth = {
-        title: 'Earth Resources',
+        title: 'Земные Ресурсы',
         id: 'earth',
         category: 'resources',
         order: 3,
@@ -50,7 +50,7 @@ Game.machinesData = (function(){
     };
 
     instance.innerSol = {
-        title: 'Inner Planetary Resources',
+        title: 'Ископаемые Ресурсы Планеты',
         id: 'innerSol',
         category: 'resources',
         order: 4,
@@ -58,7 +58,7 @@ Game.machinesData = (function(){
     };
 
     instance.outerSol = {
-        title: 'Outer Planetary Resources',
+        title: 'Внешние Ресурсы Планеты',
         id: 'outerSol',
         category: 'resources',
         order: 5,
@@ -66,7 +66,7 @@ Game.machinesData = (function(){
     };
 
     instance.science = {
-        title: 'Science',
+        title: 'Наука',
         id: 'science',
         category: 'other',
         order: 6, // 1st category item on the science page
@@ -74,7 +74,7 @@ Game.machinesData = (function(){
     };
 
     instance.rocketFuel = {
-        title: 'Rocket Fuel',
+        title: 'Ракетное Топливо',
         id: 'rocketFuel',
         category: 'other',
         order: 7,
