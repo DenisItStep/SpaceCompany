@@ -93,18 +93,18 @@ Game.enlightenmentUI = (function(){
         instance.titanTemplate = Handlebars.compile(
             ['<tr id="{{htmlId}}"><td>',
                 '<h3 class="default btn-link">{{name}}</h3>',
-                '<div id="{{htmlId}}_buy" onclick="Game.enlightenment.upgrade(\'{{id}}\')" class="btn btn-warning">Gain Titan</div>',
+                '<div id="{{htmlId}}_buy" onclick="Game.enlightenment.upgrade(\'{{id}}\')" class="btn btn-warning">Получить титан</div>',
                 '<br><br>',
                 '</td></tr>'].join('\n'));
 
         instance.upgradeTemplate = Handlebars.compile(
             ['<tr id="{{htmlId}}"><td>',
-                '<h3 class="default btn-link">{{name}}: <span id="{{htmlId}}Achieved">Dormant</span></h3>',
+                '<h3 class="default btn-link">{{name}}: <span id="{{htmlId}}Achieved">Спящий</span></h3>',
                 '<span>',
                     '<p>{{{desc}}}</p>',
                     '<p id="{{htmlId}}_cost">Costs: {{cost}} Ultrite</p>',
                 '</span>',
-                '<div id="{{htmlId}}_buy" onclick="Game.enlightenment.upgrade(\'{{id}}\')" class="btn btn-default">Activate</div>',
+                '<div id="{{htmlId}}_buy" onclick="Game.enlightenment.upgrade(\'{{id}}\')" class="btn btn-default">Активировать</div>',
                 '<br><br>',
                 '</td></tr>'].join('\n'));
 
