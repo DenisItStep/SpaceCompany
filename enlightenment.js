@@ -53,7 +53,7 @@ Game.enlightenment = (function(){
 		if(Game.stargaze.rebirth()){
 			Game.stargaze.entries.darkMatter.current = 0;
 			if(titan == true){
-				var resource = prompt("which resource?");
+				var resource = prompt("какой ресурс?");
 				// this will be a dropdown
 				this.gainTitan(resource);
 			} else {
